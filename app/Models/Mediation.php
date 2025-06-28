@@ -89,4 +89,10 @@ class Mediation extends Model
         return $this->belongsTo(Statute::class, 'statute_id', 'AG_StatuteCode');
     }
 
+    public function caseModel()
+    {
+        return $this->belongsTo(CaseModel::class, 'case_number', 'case_number');
+    }
+
+
 }

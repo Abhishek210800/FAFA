@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases/{id}/summarize-case', [DashboardController::class, 'summarizeCase'])    
      ->name('cases.summarize-case');
 
+     // chatbot
+
+     Route::post('/support-messages', [DashboardController::class, 'store'])->name('support.store');
+
+
 
 
  

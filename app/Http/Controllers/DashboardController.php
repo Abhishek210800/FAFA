@@ -9,10 +9,11 @@ use App\Models\JudgeMast;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\SupportMessage;
 
 class DashboardController extends Controller
 {
+    
     public function recentMediations()
     {
         $recentCases = Mediation::with(['caseModel'])
@@ -24,44 +25,50 @@ class DashboardController extends Controller
     }
 
     public function index()
-    {
-        $today = now()->startOfDay();
+{
+    $today = now()->startOfDay();
 
-        $pendingCases = Mediation::where('status', 'Active')
-            ->whereDate('reference_date', '<=', $today)
-            ->count();
+    $pendingCases = Mediation::where('status', 'Active')
+        ->whereDate('reference_date', '<=', $today)
+        ->count();
 
-        $resolvedCases = Mediation::where('status', 'Closed')->count();
+    $resolvedCases = Mediation::where('status', 'Closed')->count();
 
-        $upcomingHearings = Mediation::where('status', 'Active')
-            ->whereDate('reference_date', '>', $today)
-            ->count();
+    $upcomingHearings = Mediation::where('status', 'Active')
+        ->whereDate('reference_date', '>', $today)
+        ->count();
 
-        $recentCases = Mediation::with(['court', 'judge'])
-            ->orderBy('created_at', 'desc')
-            ->take(20)
-            ->get();
+    $recentCases = Mediation::with(['court', 'judge', 'caseModel']) // Include caseModel here
+        ->orderBy('created_at', 'desc')
+        ->take(20)
+        ->get();
 
-        $caseNumbers = CaseModel::select('id', 'case_number')
-            ->orderBy('created_at', 'desc')
-            ->take(50)
-            ->get();
+    $caseNumbers = CaseModel::select('id', 'case_number')
+        ->orderBy('created_at', 'desc')
+        ->take(50)
+        ->get();
 
-        $judges = JudgeMast::all();
-        $courts = CourtMast::all();
-        $cases = Mediation::all();
+    $judges = JudgeMast::all();
+    $courts = CourtMast::all();
+    $cases = Mediation::all();
 
-        return view('dashboard', compact(
-            'pendingCases',
-            'resolvedCases',
-            'upcomingHearings',
-            'recentCases',
-            'caseNumbers',
-            'judges',
-            'courts',
-            'cases'
-        ));
-    }
+    $unreadMessages = SupportMessage::where('is_read', false)
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return view('dashboard', compact(
+        'pendingCases',
+        'resolvedCases',
+        'upcomingHearings',
+        'recentCases',
+        'caseNumbers',
+        'judges',
+        'courts',
+        'cases',
+        'unreadMessages'
+    ));
+}
 
     public function filterByStatus($status)
     {
@@ -169,6 +176,28 @@ class DashboardController extends Controller
             'summary' => $parsed['summary'] ?? '',
         ]);
     }
+
+
+    //for chatbot 
+
+    public function store(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'issue_type' => 'required|string|max:255',
+        'message' => 'required|string',
+    ]);
+
+    $validated['is_read'] = false;
+
+    SupportMessage::create($validated);
+
+    return redirect()->back()->with('success', 'Your message has been submitted!');
+}
+
+
+
 
 
 

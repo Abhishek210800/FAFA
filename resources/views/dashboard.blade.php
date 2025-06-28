@@ -75,7 +75,28 @@
         <header class="bg-white shadow p-4 flex justify-between items-center">
             <input id="customSearch" type="text" placeholder="Search cases..." class="p-2 border rounded-lg w-1/3" />
             <div class="relative inline-block text-left">
-                <!-- <span class="text-gray-700">🔔 Notifications</span> -->
+                <div class="relative">
+                    <button class="relative">
+                        🔔 Notifications
+                        @if($unreadMessages->count())
+                            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded-full">{{ $unreadMessages->count() }}</span>
+                        @endif
+                    </button>
+
+                    @if($unreadMessages->count())
+                        <div class="absolute right-0 bg-white border shadow-lg mt-2 w-72 z-50 p-3">
+                            <h5 class="font-bold">New Messages</h5>
+                            <ul>
+                                @foreach($unreadMessages as $msg)
+                                    <li class="text-sm border-b py-1">
+                                        <strong>{{ $msg->name }}</strong>: {{ Str::limit($msg->message, 30) }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+
                 <button id="userDropdownBtn" class="ml-4 inline-flex justify-center items-center text-gray-700 font-medium focus:outline-none">
                     👤 {{ Auth::user()?->name ?? 'Guest' }}
                     <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,6 +226,13 @@
             </div>
         </section>
     </div>
+
+    <button id="chatbotToggle" class="fixed bottom-5 right-5 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg">
+        💬 Ask 
+    </button>
+
+    @include('components.chatbot-form')
+
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
