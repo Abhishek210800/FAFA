@@ -16,7 +16,7 @@
 
         <nav class="hidden md:flex space-x-4 items-center">
         <a href="{{ route('dashboard') }}"
-           class="bg-green-700 text-white px-3 py-1 rounded hover:bg-green-900 text-sm">
+           class="bg-red-700 text-white px-3 py-1 rounded hover:bg-red-900 text-sm">
           Dashboard
         </a>
       </nav>
@@ -81,7 +81,7 @@
                                     </button>
                                 </form>
                             @else
-                                <span class="text-gray-400 text-sm">—</span>
+                                <span class="text-gray-400 text-sm">Read</span>
                             @endif
                         </td>
                     </tr>
