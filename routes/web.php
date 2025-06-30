@@ -37,12 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases/{id}/summarize-order', [DashboardController::class, 'summarizeOrder'])
      ->name('cases.summarize-order');
 
-    Route::post('/cases/{id}/summarize-case', [DashboardController::class, 'summarizeCase'])    
-     ->name('cases.summarize-case');
+    Route::post('/cases/{id}/summarize-case', [DashboardController::class, 'summarizeCase'])->name('cases.summarize-case');
 
-     // chatbot
+    
+    // chatbot
+    Route::post('/support-messages', [DashboardController::class, 'store'])->name('support.store');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('notifications.index');
+    Route::post('/notifications/{id}/mark-read', [DashboardController::class, 'markRead'])->name('notifications.markRead');
 
-     Route::post('/support-messages', [DashboardController::class, 'store'])->name('support.store');
 
 
 

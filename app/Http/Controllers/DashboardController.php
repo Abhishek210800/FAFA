@@ -180,26 +180,33 @@ class DashboardController extends Controller
 
     //for chatbot 
 
-    public function store(Request $request)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'issue_type' => 'required|string|max:255',
-        'message' => 'required|string',
-    ]);
+   public function store(Request $request)
+    {
+        SupportMessage::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'issue_type' => $request->input('issue_type'),
+            'message' => $request->input('message'),
+            'is_read' => false,
+        ]);
 
-    $validated['is_read'] = false;
-
-    SupportMessage::create($validated);
-
-    return redirect()->back()->with('success', 'Your message has been submitted!');
-}
+        return redirect()->route('dashboard')->with('success', 'Your message has been submitted successfully!');
+    }
 
 
+    public function notifications()
+    {
+        $messages = SupportMessage::latest()->paginate(10);
+        return view('notifications.index', compact('messages'));
+    }
 
+    public function markRead($id)
+    {
+        $message = SupportMessage::findOrFail($id);
+        $message->update(['is_read' => true]);
 
-
+        return redirect()->back()->with('success', 'Message marked as read.');
+    }
 
 
 }

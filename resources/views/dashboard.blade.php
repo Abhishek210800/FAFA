@@ -75,27 +75,44 @@
         <header class="bg-white shadow p-4 flex justify-between items-center">
             <input id="customSearch" type="text" placeholder="Search cases..." class="p-2 border rounded-lg w-1/3" />
             <div class="relative inline-block text-left">
+                @php
+                    $unreadCount = \App\Models\SupportMessage::where('is_read', false)->count();
+                    $recentMessages = \App\Models\SupportMessage::where('is_read', false)->latest()->take(5)->get();
+                @endphp
+
                 <div class="relative">
-                    <button class="relative">
-                        🔔 Notifications
-                        @if($unreadMessages->count())
-                            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded-full">{{ $unreadMessages->count() }}</span>
+                    <button onclick="toggleNotificationDropdown()" class="relative">
+                        🔔 Notification
+                        @if($unreadCount > 0)
+                            <span class="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded-full">{{ $unreadCount }}</span>
                         @endif
                     </button>
 
-                    @if($unreadMessages->count())
-                        <div class="absolute right-0 bg-white border shadow-lg mt-2 w-72 z-50 p-3">
-                            <h5 class="font-bold">New Messages</h5>
-                            <ul>
-                                @foreach($unreadMessages as $msg)
-                                    <li class="text-sm border-b py-1">
-                                        <strong>{{ $msg->name }}</strong>: {{ Str::limit($msg->message, 30) }}
-                                    </li>
-                                @endforeach
-                            </ul>
+                    <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white shadow-md rounded p-3 z-50">
+                        <strong>New Messages</strong>
+                        <ul class="text-sm mt-2">
+                            @forelse ($recentMessages as $msg)
+                                <li class="mb-1">
+                                    <strong>{{ $msg->name }}</strong>: {{ Str::limit($msg->message, 30) }}
+                                </li>
+                            @empty
+                                <li>No new messages</li>
+                            @endforelse
+                        </ul>
+                        <div class="text-right mt-2">
+                            <a href="{{ route('notifications.index') }}" class="text-blue-600 hover:underline text-sm">View All</a>
                         </div>
-                    @endif
+                    </div>
                 </div>
+
+                <script>
+                function toggleNotificationDropdown() {
+                    const el = document.getElementById('notificationDropdown');
+                    el.classList.toggle('hidden');
+                    setTimeout(() => el.classList.add('hidden'), 5000);
+                }
+                </script>
+
 
                 <button id="userDropdownBtn" class="ml-4 inline-flex justify-center items-center text-gray-700 font-medium focus:outline-none">
                     👤 {{ Auth::user()?->name ?? 'Guest' }}
