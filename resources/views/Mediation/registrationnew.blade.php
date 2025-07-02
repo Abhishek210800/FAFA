@@ -158,113 +158,116 @@
 
 			
 				<!-- Basic Details Accordion -->
-					<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
-						<!-- Accordion Header -->
-						<div class="flex justify-between items-center p-4 bg-[#017AFF] text-white rounded-t-lg cursor-pointer" onclick="toggleAccordion()">
-							<legend class="text-md font-bold tracking-wide">Basic Details</legend>
-							<span id="accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
-						</div>
+									<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
+										<!-- Accordion Header -->
+										<div class="flex justify-between items-center p-4 bg-[#017AFF] text-white rounded-t-lg cursor-pointer" onclick="toggleAccordion()">
+											<legend class="text-md font-bold tracking-wide">Basic Details</legend>
+											<span id="accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
+										</div>
 
-						<!-- Accordion Content -->
-						<fieldset id="accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm transition-all duration-500">
+										<!-- Accordion Content -->
+										<fieldset id="accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm transition-all duration-500">
 
-							<!-- First Row: 3 Columns -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-								<!-- Court Dropdown -->
-								<div>
-										<label class="block text-gray-700 font-semibold text-sm">Court</label>
-										<select id="court_select" name="court_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-												<option value="">Select Court</option>
-												@foreach ($courts as $court)
-														<option value="{{ $court->AG_Courtcode }}">{{ $court->Court_Name }}</option>
-												@endforeach
-										</select>
-								</div>
+											<!-- First Row: 3 Columns -->
+											<div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+												<!-- Court Dropdown -->
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Court<span class="text-red-500">*</span></label>
+													<select id="court_select" name="court_id" required class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" >
+														<option value="">Select Court</option>
+														@foreach ($courts as $court)
+															<option value="{{ $court->AG_Courtcode }}" {{ old('court_id') == $court->AG_Courtcode ? 'selected' : '' }}>
+																{{ $court->Court_Name }}
+															</option>
+														@endforeach
+													</select>
+												</div>
 
-								<!-- Judge Name Input with Autocomplete -->
-									<div>
-											<label class="block text-gray-700 font-semibold text-sm">Name of Judge</label>
-											<input type="text" name="judge_name" id="judge_name_input"
-													list="judge_suggestions"
-													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"
-													autocomplete="off"
-													placeholder="Enter Judge name...">
-											<datalist id="judge_suggestions"></datalist>
+												<!-- Judge Name Input with Autocomplete -->
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Name of Judge<span class="text-red-500">*</span></label>
+													<input type="text" name="judge_name" id="judge_name_input"
+														list="judge_suggestions"
+														value="{{ old('judge_name') }}"
+														class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"
+														autocomplete="off"
+														placeholder="Enter Judge name...">
+													<datalist id="judge_suggestions"></datalist>
+												</div>
+
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Case Number<span class="text-red-500">*</span></label>
+													<input 
+														type="text" 
+														name="case_number" 
+														value="{{ old('case_number') }}" 
+														class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('case_number') border-red-600 @enderror" 
+														placeholder="Enter Case Number"
+													>
+													@error('case_number')
+														<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+													@enderror
+												</div>
+											</div>
+
+											<!-- Second Row: 4 Columns -->
+											<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Date Of Reference Order<span class="text-red-500">*</span></label>
+													<input type="date" name="reference_date" value="{{ old('reference_date') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
+												</div>
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Date of First Mediation<span class="text-red-500">*</span></label>
+													<input type="date" name="mediation_date" value="{{ old('mediation_date') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
+												</div>
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Order of Court Referring To Mediation</label>
+													<input type="file" name="order_file" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-3 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
+												</div>
+												<div>
+													<label class="block text-gray-700 font-semibold text-sm">Case File</label>
+													<input type="file" name="case_file" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-3 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
+												</div>
+											</div>
+										</fieldset>
 									</div>
 
 									<script>
-											document.getElementById('judge_name_input').addEventListener('input', function () {
-												const query = this.value;
-												const courtSelect = document.querySelector('select[name="court_id"]'); // adjust selector if needed
-												const courtId = courtSelect ? courtSelect.value : '';
+										function toggleAccordion() {
+											const content = document.getElementById("accordion-content");
+											const icon = document.getElementById("accordion-icon");
+											content.classList.toggle("hidden");
+											icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
+										}
 
-												if (query.length >= 1) {
-														fetch(`/judge-suggestions?query=${encodeURIComponent(query)}&court_id=${encodeURIComponent(courtId)}`)
-																.then(response => response.json())
-																.then(data => {
-																		const datalist = document.getElementById('judge_suggestions');
-																		datalist.innerHTML = '';
-																		data.forEach(judge => {
-																				const option = document.createElement('option');
-																				option.value = judge.Judge_Name;
-																				datalist.appendChild(option);
-																		});
-																});
-												}
+										document.getElementById('judge_name_input').addEventListener('input', function () {
+											const query = this.value;
+											const courtSelect = document.querySelector('select[name="court_id"]');
+											const courtId = courtSelect ? courtSelect.value : '';
+
+											if (query.length >= 1) {
+												fetch(`/judge-suggestions?query=${encodeURIComponent(query)}&court_id=${encodeURIComponent(courtId)}`)
+													.then(response => response.json())
+													.then(data => {
+														const datalist = document.getElementById('judge_suggestions');
+														datalist.innerHTML = '';
+														data.forEach(judge => {
+															const option = document.createElement('option');
+															option.value = judge.Judge_Name;
+															datalist.appendChild(option);
+														});
+													});
+											}
 										});
 
+										// Re-trigger suggestions if judge_name has old value
+										window.addEventListener('DOMContentLoaded', function () {
+											const judgeInput = document.getElementById('judge_name_input');
+											if (judgeInput.value.length > 0) {
+												judgeInput.dispatchEvent(new Event('input'));
+											}
+										});
 									</script>
-
-
-
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Case Number</label>
-									<input 
-											type="text" 
-											name="case_number" 
-											value="{{ old('case_number') }}" 
-											class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('case_number') border-red-600 @enderror" 
-											placeholder="Enter Case Number"
-									>
-									@error('case_number')
-											<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-									@enderror
-							 </div>
-
-							</div>
-
-							<!-- Second Row: 4 Columns -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-									<div>
-											<label class="block text-gray-700 font-semibold text-sm">Date Of Reference Order</label>
-											<input type="date" name="reference_date" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-									</div>
-									<div>
-											<label class="block text-gray-700 font-semibold text-sm">Date of First Mediation</label>
-											<input type="date" name="mediation_date" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-									</div>
-									<div>
-											<label class="block text-gray-700 font-semibold text-sm">Order of Court Referring To Mediation</label>
-											<input type="file" name="order_file" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-3 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
-									</div>
-									<div>
-											<label class="block text-gray-700 font-semibold text-sm">Case File</label>
-											<input type="file" name="case_file" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-3 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
-									</div>
-							</div>
-
-
-						</fieldset>
-					</div>
-
-					<script>
-						function toggleAccordion() {
-							const content = document.getElementById("accordion-content");
-							const icon = document.getElementById("accordion-icon");
-							content.classList.toggle("hidden");
-							icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
-						}
-					</script>
 
 								
 								
@@ -287,16 +290,16 @@
 								
 								<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Name</label>
-										<input type="text" name="complainant_name" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter respondent's name">
+										<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
+										<input type="text" name="complainant_name" value="{{ old('complainant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter respondent's name">
 									</div>
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
-										<input type="text" name="complainant_father" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter father's name">
+										<input type="text" name="complainant_father" value="{{ old('complainant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter father's name">
 									</div>
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Date of Birth</label>
-										<input type="date" name="complainant_dob" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
+										<label class="block text-gray-700 font-semibold text-sm">Date of Birth<span class="text-red-500">*</span></label>
+										<input type="date" name="complainant_dob" value="{{ old('complainant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
 									</div>
 									<div>
 											<label for="complainant_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
@@ -316,36 +319,54 @@
 								<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">Address</label>
-										<input type="text" name="complainant_address" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter address">
+										<input type="text" name="complainant_address" value="{{ old('complainant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter address">
 									</div>
 
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">State</label>
-										<select name="complainant_state_id" class="state-select  p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" data-target="#city_select_1" id="state_select_1" name="state_id_1">
+										<select 
+												name="complainant_state_id" 
+												class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"  
+												id="state_select_1"
+												data-old-state="{{ old('complainant_state_id') }}"
+												data-old-city="{{ old('complainant_city_id') }}"
+												data-target="#city_select_1"
+											>
+
 												<option value="">Select State</option>
 												@foreach ($states as $state)
-														<option value="{{ $state->id }}">{{ ucfirst(strtolower($state->name)) }}</option>
+														<option value="{{ $state->id }}" {{ old('complainant_state_id') == $state->id ? 'selected' : '' }}>
+																{{ ucfirst(strtolower($state->name)) }}
+														</option>
 												@endforeach
 										</select>
+
 								 </div>
 								
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">City</label>
-										<select name="complainant_city_id" class="city-select  p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" id="city_select_1" name="city_id_1">
+										<select 
+												name="complainant_city_id" 
+												class="city-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" 
+												id="city_select_1"
+										>
 												<option value="">Select City</option>
 												@foreach ($cities as $city)
-														<option value="{{ $city->id }}">{{ $city->name }}</option>
+														<option value="{{ $city->id }}" {{ old('complainant_city_id') == $city->id ? 'selected' : '' }}>
+																{{ $city->name }}
+														</option>
 												@endforeach
 										</select>
+
 								  </div>
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">District</label>
-										<input type="text" name="complainant_district" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
+										<input type="text" name="complainant_district" value="{{ old('complainant_district') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
 									</div>
 									
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
-										<input type="text" name="complainant_pincode" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter pincode">
+										<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode') }}"  class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter pincode">
 									</div>
 								</div>
 
@@ -371,7 +392,7 @@
 
 										<!-- Email Section -->
 										<div>
-												<label for="complainant_email" class="block text-gray-700 font-semibold text-sm">Email</label>
+												<label for="complainant_email" class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
 												<input 
 														id="complainant_email"
 														type="email" 
@@ -391,7 +412,7 @@
 								<!-- Fourth Row: Upload ID Proof -->
 								<div class="mt-6">
 									<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
-									<input type="file" name="complainant_id_proof" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
+									<input type="file" name="complainant_id_proof" value="{{ old('complainant_id_proof') }}"  class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
 								</div>
 
 								<!-- Buttons Row -->
@@ -433,16 +454,16 @@
 							<!-- First Row: 4 Columns -->
 							<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Name</label>
-									<input type="text" name="defendant_name" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
+									<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
+									<input type="text" name="defendant_name" value="{{ old('defendant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
 								</div>
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
-									<input type="text" name="defendant_father" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
+									<input type="text" name="defendant_father" value="{{ old('defendant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
 								</div>
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Date of Birth</label>
-									<input type="date" name="defendant_dob" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
+									<label class="block text-gray-700 font-semibold text-sm">Date of Birth<span class="text-red-500">*</span></label>
+									<input type="date" name="defendant_dob" value="{{ old('defendant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
 								</div>
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Gender</label>
@@ -461,14 +482,24 @@
 							<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Address</label>
-									<input type="text" name="defendant_address" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
+									<input type="text" name="defendant_address" value="{{ old('defendant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
 								</div>
 								<div>
 										<label class="block text-gray-700 font-semibold text-sm">State</label>
-										<select name="defendant_state_id" class="state-select  p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" data-target="#city_select_2" id="state_select_2" name="state_id_2">
+										<select 
+												name="defendant_state_id" 
+												class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"  
+												id="state_select_2"
+												data-old-state="{{ old('defendant_state_id') }}"
+												data-old-city="{{ old('defendant_city_id') }}"
+												data-target="#city_select_2"
+											>
 												<option value="">Select State</option>
 												@foreach ($states as $state)
-														<option value="{{ $state->id }}">{{ ucfirst(strtolower($state->name)) }}</option>
+														<option value="{{ $state->id }}" {{ old('defendant_state_id') == $state->id ? 'selected' : '' }}>
+																{{ ucfirst(strtolower($state->name)) }}
+														</option>
+
 												@endforeach
 										</select>
 								</div>
@@ -476,16 +507,21 @@
 									<label class="block text-gray-700 font-semibold text-sm">City</label>
 									<select name="defendant_city_id" class="city-select  p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" id="city_select_2" name="city_id_2">
 											<option value="">Select City</option>
+											@foreach ($cities as $city)
+														<option value="{{ $city->id }}" {{ old('complainant_city_id') == $city->id ? 'selected' : '' }}>
+																{{ $city->name }}
+														</option>
+												@endforeach
 									</select>
 							</div>
 									<div>
 										<label class="block text-gray-700 font-semibold text-sm">District</label>
-										<input type="text" name="defendant_district" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
+										<input type="text" name="defendant_district" value="{{ old('defendant_district') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
 									</div>
 									
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
-									<input type="text" name="defendant_pincode" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode">
+									<input type="text" name="defendant_pincode" value="{{ old('defendant_pincode') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode">
 								</div>
 							</div>
 
@@ -513,7 +549,7 @@
 
 									<!-- Email Section -->
 									<div>
-											<label for="defendant_email" class="block text-gray-700 font-semibold text-sm">Email</label>
+											<label for="defendant_email" class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
 											<input 
 													id="defendant_email"
 													type="email" 
@@ -572,44 +608,99 @@
 							<!-- Fields in Single Row -->
 							<!-- Advocates and Mediators selection + Add new buttons -->
 							<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+								@php
+									use App\Models\Advocate;
+									use App\Models\Mediator;
+
+									$complainantAdvocateName = null;
+									if (old('complainant_advocate_id')) {
+											$advocate = Advocate::find(old('complainant_advocate_id'));
+											$complainantAdvocateName = $advocate ? $advocate->name : old('complainant_advocate_name');
+									} else {
+											$complainantAdvocateName = old('complainant_advocate_name');
+									}
+									// Defendant Advocate
+									$defendantAdvocateName = null;
+									if (old('defendant_advocate_id')) {
+										$advocate = Advocate::find(old('defendant_advocate_id'));
+										$defendantAdvocateName = $advocate ? $advocate->name : old('defendant_advocate_name');
+									} else {
+										$defendantAdvocateName = old('defendant_advocate_name');
+									}
+
+									// Mediator
+									$mediatorName = null;
+									if (old('mediator_id')) {
+										$mediator = Mediator::find(old('mediator_id'));
+										$mediatorName = $mediator ? $mediator->name : old('mediator_name');
+									} else {
+										$mediatorName = old('mediator_name');
+									}
+							@endphp
+
   
 								<!-- Complainant Advocate -->
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Complainant Advocate</label>
 									<div class="flex items-center space-x-2">
-										<div class="w-full">
-											<input type="text" id="complainant_advocate_name" class="p-3 border border-gray-300 rounded-lg w-full" placeholder="Search Advocate">
-											<input type="hidden" name="complainant_advocate_id" id="complainant_advocate_id">
-										</div>
-										<button type="button" onclick="openAdvocateModal()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500">Add New</button>
+											<div class="w-full">
+													<input type="text" id="complainant_advocate_name"
+															name="complainant_advocate_name"
+															value="{{ $complainantAdvocateName }}"
+															class="p-3 border border-gray-300 rounded-lg w-full"
+															placeholder="Search Advocate">
+
+													<input type="hidden" name="complainant_advocate_id" id="complainant_advocate_id"
+															value="{{ old('complainant_advocate_id') }}">
+											</div>
+											<button type="button" onclick="openAdvocateModal()"
+													class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500">Add New</button>
 									</div>
-								</div>
+							</div>
 
 								<!-- Defendant Advocate -->
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Defendant Advocate</label>
 									<div class="flex items-center space-x-2">
 										<div class="w-full">
-											<input type="text" id="defendant_advocate_name" class="p-3 border border-gray-300 rounded-lg w-full" placeholder="Search Advocate">
-											<input type="hidden" name="defendant_advocate_id" id="defendant_advocate_id">
+											<input type="text" id="defendant_advocate_name"
+														name="defendant_advocate_name"
+														value="{{ $defendantAdvocateName }}"
+														class="p-3 border border-gray-300 rounded-lg w-full"
+														placeholder="Search Advocate">
+
+											<input type="hidden" name="defendant_advocate_id" id="defendant_advocate_id"
+														value="{{ old('defendant_advocate_id') }}">
 										</div>
-										<button type="button" onclick="openAdvocateModal()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500">Add New</button>
+										<button type="button" onclick="openAdvocateModal()"
+														class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500">
+											Add New
+										</button>
 									</div>
 								</div>
+
 
 								<!-- Mediator -->
 								<div>
 									<label class="block text-gray-700 font-semibold text-sm">Mediator</label>
 									<div class="flex items-center space-x-2">
 										<div class="w-full">
-											<input type="text" id="mediator_name" class="p-3 border border-gray-300 rounded-lg w-full" placeholder="Search Mediator">
-											<input type="hidden" name="mediator_id" id="mediator_id">
+											<input type="text" id="mediator_name"
+														name="mediator_name"
+														value="{{ $mediatorName }}"
+														class="p-3 border border-gray-300 rounded-lg w-full"
+														placeholder="Search Mediator">
+
+											<input type="hidden" name="mediator_id" id="mediator_id"
+														value="{{ old('mediator_id') }}">
 										</div>
-										<button type="button" onclick="openMediatorModal()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500">Add New</button>
+										<button type="button" onclick="openMediatorModal()"
+														class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500">
+											Add New
+										</button>
 									</div>
 								</div>
 
-							</div>
 
 
 
@@ -648,7 +739,9 @@
 									<select name="subject_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full">
 											<option value="">Select Subject</option>
 											@foreach ($subjects as $subject)
-													<option value="{{ $subject->id }}">{{ $subject->name }}</option>
+													<option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>
+															{{ $subject->name }}
+													</option>
 											@endforeach
 									</select>
 							</div>
@@ -659,7 +752,9 @@
 									<select name="issue_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full">
 											<option value="">Select Issue</option>
 											@foreach ($issues as $issue)
-													<option value="{{ $issue->Issue_Code }}">{{ $issue->IssueName }}</option>
+													<option value="{{ $issue->Issue_Code }}" {{ old('issue_id') == $issue->Issue_Code ? 'selected' : '' }}>
+															{{ $issue->IssueName }}
+													</option>
 											@endforeach
 									</select>
 							</div>
@@ -670,11 +765,12 @@
 									<select name="statute_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full">
 											<option value="">Select Statute</option>
 											@foreach ($statutes as $statute)
-													<option value="{{ $statute->AG_StatuteCode }}">{{ $statute->Act_Name }}</option>
+													<option value="{{ $statute->AG_StatuteCode }}" {{ old('statute_id') == $statute->AG_StatuteCode ? 'selected' : '' }}>
+															{{ $statute->Act_Name }}
+													</option>
 											@endforeach
 									</select>
 							</div>
-						</div>
 
 
 					</fieldset>
@@ -739,30 +835,50 @@
 
 													<!-- AJAX to dynamically fetch cities based on the selected state -->
 														<script>
-															document.querySelectorAll('.state-select').forEach(stateDropdown => {
-																	stateDropdown.addEventListener('change', function () {
-																			const stateId = this.value;
-																			const citySelector = this.getAttribute('data-target');
-																			const cityDropdown = document.querySelector(citySelector);
+																document.addEventListener("DOMContentLoaded", function () {
+																	document.querySelectorAll('.state-select').forEach(stateDropdown => {
+																		const citySelector = stateDropdown.getAttribute('data-target');
+																		const cityDropdown = document.querySelector(citySelector);
 
+																		// Get old values from data attributes (if present)
+																		const oldStateId = stateDropdown.dataset.oldState;
+																		const oldCityId = stateDropdown.dataset.oldCity;
+
+																		// If old state and city exist (form error case), prepopulate
+																		if (oldStateId && oldCityId) {
+																			fetchCities(oldStateId, oldCityId, cityDropdown);
+																	}
+
+																		// On state change
+																		stateDropdown.addEventListener('change', function () {
+																			const stateId = this.value;
 																			if (stateId) {
-																					fetch(`/fetch-cities?state_id=${stateId}`)
-																							.then(response => response.json())
-																							.then(data => {
-																									cityDropdown.innerHTML = '<option value="">Select City</option>';
-																									data.cities.forEach(city => {
-																											const option = document.createElement('option');
-																											option.value = city.id;
-																											option.textContent = city.name;
-																											cityDropdown.appendChild(option);
-																									});
-																							});
+																				fetchCities(stateId, null, cityDropdown); // Clear city selection
 																			} else {
-																					cityDropdown.innerHTML = '<option value="">Select City</option>';
+																				cityDropdown.innerHTML = '<option value="">Select City</option>';
 																			}
+																		});
 																	});
-															});
-													</script>
+
+																	function fetchCities(stateId, selectedCityId = null, cityDropdown) {
+																		fetch(`/fetch-cities?state_id=${stateId}`)
+																			.then(response => response.json())
+																			.then(data => {
+																				cityDropdown.innerHTML = '<option value="">Select City</option>';
+																				data.cities.forEach(city => {
+																					const option = document.createElement('option');
+																					option.value = city.id;
+																					option.textContent = city.name;
+																					if (selectedCityId && city.id == selectedCityId) {
+																						option.selected = true;
+																					}
+																					cityDropdown.appendChild(option);
+																				});
+																			});
+																	}
+																});
+															</script>
+
 													
 												</div>
 											</div>
