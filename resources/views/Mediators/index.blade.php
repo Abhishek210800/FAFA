@@ -113,11 +113,36 @@
         <h2 class="text-lg font-semibold">Add New Mediator</h2>
         <form method="POST" action="{{ route('mediators.store') }}">
             @csrf
-            <input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded" value="{{ old('name') }}" required>
-            <input type="text" name="qualification" placeholder="Specialization" class="w-full p-2 border rounded mt-2" value="{{ old('qualification') }}">
-            <input type="text" name="mobile" placeholder="Mobile Number" class="w-full p-2 border rounded mt-2" value="{{ old('mobile') }}" required>
-            <input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded mt-2" value="{{ old('emailId') }}" required>
-            <input type="text" name="address" placeholder="Address" class="w-full p-2 border rounded mt-2" value="{{ old('address') }}" required>
+            <!-- Name -->
+            <label class="block mt-2">
+            <span class="block mb-1">Name <span class="text-red-500">*</span></span>
+            <input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Specialization -->
+            <label class="block mt-2">
+            <span class="block mb-1">Specialization <span class="text-red-500">*</span></span>
+            <input type="text" name="qualification" placeholder="Specialization" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Address -->
+            <label class="block mt-2">
+            <span class="block mb-1">Address <span class="text-red-500">*</span></span>
+            <input type="text" name="address" placeholder="Address" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Mobile -->
+            <label class="block mt-2">
+            <span class="block mb-1">Mobile <span class="text-red-500">*</span></span>
+            <input type="text" name="mobile" placeholder="Mobile" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Email -->
+            <label class="block mt-2">
+            <span class="block mb-1">Email <span class="text-red-500">*</span></span>
+            <input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded" required>
+            </label>
+
 
             <div class="flex justify-end pt-3">
                 <button type="button" onclick="closeMediatorModal()" class="px-4 py-2 mr-2 text-gray-600">Cancel</button>

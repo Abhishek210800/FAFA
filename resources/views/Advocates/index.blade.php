@@ -127,10 +127,30 @@
         <h2 class="text-lg font-semibold">Add New Advocate</h2>
         <form id="advocateForm" method="POST" action="{{ route('advocates.store') }}">
             @csrf
-            <input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded" value="{{ old('name') }}" required>
-            <input type="text" name="bar_number" placeholder="Bar Number" class="w-full p-2 border rounded mt-2" value="{{ old('bar_number') }}" required>
-            <input type="text" name="mobile" placeholder="Mobile Number" class="w-full p-2 border rounded mt-2" value="{{ old('mobile') }}" required>
-            <input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded mt-2" value="{{ old('emailId') }}" required>
+           <!-- Name -->
+            <label class="block mt-2">
+            <span class="block mb-1">Name <span class="text-red-500">*</span></span>
+            <input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Bar Number -->
+            <label class="block mt-2">
+            <span class="block mb-1">Bar Number <span class="text-red-500">*</span></span>
+            <input type="text" name="bar_number" placeholder="Bar Number" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Mobile -->
+            <label class="block mt-2">
+            <span class="block mb-1">Mobile <span class="text-red-500">*</span></span>
+            <input type="text" name="mobile" placeholder="Mobile" class="w-full p-2 border rounded" required>
+            </label>
+
+            <!-- Email -->
+            <label class="block mt-2">
+            <span class="block mb-1">Email <span class="text-red-500">*</span></span>
+            <input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded" required>
+            </label>
+											
 
             <div class="flex justify-end pt-3">
                 <button type="button" onclick="closeAdvocateModal()" class="px-4 py-2 mr-2 text-gray-600">Cancel</button>

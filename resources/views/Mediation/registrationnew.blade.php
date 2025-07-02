@@ -294,7 +294,7 @@
 										<input type="text" name="complainant_name" value="{{ old('complainant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter respondent's name">
 									</div>
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
+										<label class="block text-gray-700 font-semibold text-sm">Father's Name<span class="text-red-500">*</span></label>
 										<input type="text" name="complainant_father" value="{{ old('complainant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter father's name">
 									</div>
 									<div>
@@ -302,7 +302,7 @@
 										<input type="date" name="complainant_dob" value="{{ old('complainant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
 									</div>
 									<div>
-											<label for="complainant_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+											<label for="complainant_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender<span class="text-red-500">*</span></label>
 												<select id="complainant_gender" name="complainant_gender" 
 													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
 													<option value="">Select Gender</option>
@@ -318,12 +318,12 @@
 								<!-- Second Row: 5 Columns -->
 								<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Address</label>
+										<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
 										<input type="text" name="complainant_address" value="{{ old('complainant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter address">
 									</div>
 
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">State</label>
+										<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
 										<select 
 												name="complainant_state_id" 
 												class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"  
@@ -344,7 +344,7 @@
 								 </div>
 								
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">City</label>
+										<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
 										<select 
 												name="complainant_city_id" 
 												class="city-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" 
@@ -365,7 +365,7 @@
 									</div>
 									
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
+										<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
 										<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode') }}"  class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter pincode">
 									</div>
 								</div>
@@ -392,7 +392,7 @@
 
 										<!-- Email Section -->
 										<div>
-												<label for="complainant_email" class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
+												<label for="complainant_email" class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span><span class="text-red-500">*</span></label>
 												<input 
 														id="complainant_email"
 														type="email" 
@@ -416,11 +416,11 @@
 								</div>
 
 								<!-- Buttons Row -->
-								<div class="mt-6 flex justify-end space-x-4">
+								<!-- <div class="mt-6 flex justify-end space-x-4">
 									<button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all">Save</button>
 									<button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all">Save and Add Another</button>
 									<button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all">Send Notice</button>
-								</div>
+								</div> -->
 
 							</fieldset>
 						</div>
@@ -458,7 +458,7 @@
 									<input type="text" name="defendant_name" value="{{ old('defendant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
 								</div>
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
+									<label class="block text-gray-700 font-semibold text-sm">Father's Name<span class="text-red-500">*</span></label>
 									<input type="text" name="defendant_father" value="{{ old('defendant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
 								</div>
 								<div>
@@ -466,7 +466,7 @@
 									<input type="date" name="defendant_dob" value="{{ old('defendant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
 								</div>
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Gender</label>
+									<label class="block text-gray-700 font-semibold text-sm">Gender<span class="text-red-500">*</span></label>
 									<select name="defendant_gender" 
 											class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
 											<option value="">Select Gender</option>
@@ -481,11 +481,11 @@
 							<!-- Second Row: 5 Columns -->
 							<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Address</label>
+									<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
 									<input type="text" name="defendant_address" value="{{ old('defendant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
 								</div>
 								<div>
-										<label class="block text-gray-700 font-semibold text-sm">State</label>
+										<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
 										<select 
 												name="defendant_state_id" 
 												class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"  
@@ -494,7 +494,7 @@
 												data-old-city="{{ old('defendant_city_id') }}"
 												data-target="#city_select_2"
 											>
-												<option value="">Select State</option>
+												<option value="">Select State<span class="text-red-500">*</span></option>
 												@foreach ($states as $state)
 														<option value="{{ $state->id }}" {{ old('defendant_state_id') == $state->id ? 'selected' : '' }}>
 																{{ ucfirst(strtolower($state->name)) }}
@@ -504,7 +504,7 @@
 										</select>
 								</div>
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">City</label>
+									<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
 									<select name="defendant_city_id" class="city-select  p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" id="city_select_2" name="city_id_2">
 											<option value="">Select City</option>
 											@foreach ($cities as $city)
@@ -515,12 +515,12 @@
 									</select>
 							</div>
 									<div>
-										<label class="block text-gray-700 font-semibold text-sm">District</label>
+										<label class="block text-gray-700 font-semibold text-sm">District<span class="text-red-500">*</span></label>
 										<input type="text" name="defendant_district" value="{{ old('defendant_district') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
 									</div>
 									
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
+									<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
 									<input type="text" name="defendant_pincode" value="{{ old('defendant_pincode') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode">
 								</div>
 							</div>
@@ -573,11 +573,11 @@
 								</div>
 
 							<!-- Action Buttons -->
-							<div class="flex justify-end space-x-4 mt-6">
+							<!-- <div class="flex justify-end space-x-4 mt-6">
 								<button class="bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-all">Save</button>
 								<button class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-400 transition-all">Save and Add Another</button>
 								<button class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-500 transition-all">Send Notice</button>
-							</div>
+							</div> -->
 						</fieldset>
 					</div>
 
@@ -641,7 +641,7 @@
   
 								<!-- Complainant Advocate -->
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Complainant Advocate</label>
+									<label class="block text-gray-700 font-semibold text-sm">Complainant Advocate <span class="text-red-500">*</span></label>
 									<div class="flex items-center space-x-2">
 											<div class="w-full">
 													<input type="text" id="complainant_advocate_name"
@@ -660,7 +660,7 @@
 
 								<!-- Defendant Advocate -->
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Defendant Advocate</label>
+									<label class="block text-gray-700 font-semibold text-sm">Defendant Advocate <span class="text-red-500">*</span></label>
 									<div class="flex items-center space-x-2">
 										<div class="w-full">
 											<input type="text" id="defendant_advocate_name"
@@ -682,7 +682,7 @@
 
 								<!-- Mediator -->
 								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Mediator</label>
+									<label class="block text-gray-700 font-semibold text-sm">Mediator<span class="text-red-500">*</span></label>
 									<div class="flex items-center space-x-2">
 										<div class="w-full">
 											<input type="text" id="mediator_name"
@@ -735,7 +735,7 @@
 							<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 							<!-- Subject -->
 							<div>
-									<label class="block text-gray-700 font-semibold text-sm">Subject</label>
+									<label class="block text-gray-700 font-semibold text-sm">Subject<span class="text-red-500">*</span></label>
 									<select name="subject_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full">
 											<option value="">Select Subject</option>
 											@foreach ($subjects as $subject)
@@ -748,7 +748,7 @@
 
 							<!-- Issue -->
 							<div>
-									<label class="block text-gray-700 font-semibold text-sm">Issue</label>
+									<label class="block text-gray-700 font-semibold text-sm">Issue<span class="text-red-500">*</span></label>
 									<select name="issue_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full">
 											<option value="">Select Issue</option>
 											@foreach ($issues as $issue)
@@ -761,7 +761,7 @@
 
 							<!-- Statute -->
 							<div>
-									<label class="block text-gray-700 font-semibold text-sm">Statute</label>
+									<label class="block text-gray-700 font-semibold text-sm">Statute<span class="text-red-500">*</span></label>
 									<select name="statute_id" class="p-3 border border-gray-300 bg-white rounded-lg w-full">
 											<option value="">Select Statute</option>
 											@foreach ($statutes as $statute)
@@ -890,10 +890,22 @@
 												<h2 class="text-lg font-semibold">Add New Advocate</h2>
 												<form id="advocateForm">
 														@csrf
+														<label class="block mt-2">
+															Name <span class="text-red-500">*</span>
 														<input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded" required>
+														</label>
+														<label class="block mt-2">
+															Bar Number <span class="text-red-500">*</span>
 														<input type="text" name="bar_number" placeholder="Bar Number" class="w-full p-2 border rounded mt-2" required>
+														</label>
+														<label class="block mt-2">
+															Mobile <span class="text-red-500">*</span>
 														<input type="text" name="mobile" placeholder="Mobile" class="w-full p-2 border rounded mt-2" required>
+														</label>
+														<label class="block mt-2">
+															Email <span class="text-red-500">*</span>
 														<input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded mt-2" required>
+														</label>
 
 
 														<div class="flex justify-end pt-3">
@@ -910,11 +922,30 @@
 												<h2 class="text-lg font-semibold">Add New Mediator</h2>
 												<form id="mediatorForm">
 														@csrf
-														<input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded" required>
-														<input type="text" name="qualification" placeholder="Specialization" class="w-full p-2 border rounded mt-2" required>
-														<input type="text" name="address" placeholder="Address" class="w-full p-2 border rounded mt-2" required>
-														<input type="text" name="mobile" placeholder="Mobile" class="w-full p-2 border rounded mt-2" required>
-														<input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded mt-2" required>
+														<label class="block mt-2">
+															Name <span class="text-red-500">*</span>
+															<input type="text" name="name" placeholder="Name" class="w-full p-2 border rounded mt-1" required>
+														</label>
+
+														<label class="block mt-2">
+															Specialization <span class="text-red-500">*</span>
+															<input type="text" name="qualification" placeholder="Specialization" class="w-full p-2 border rounded mt-1" required>
+														</label>
+
+														<label class="block mt-2">
+															Address <span class="text-red-500">*</span>
+															<input type="text" name="address" placeholder="Address" class="w-full p-2 border rounded mt-1" required>
+														</label>
+
+														<label class="block mt-2">
+															Mobile <span class="text-red-500">*</span>
+															<input type="text" name="mobile" placeholder="Mobile" class="w-full p-2 border rounded mt-1" required>
+														</label>
+
+														<label class="block mt-2">
+															Email <span class="text-red-500">*</span>
+															<input type="email" name="emailId" placeholder="Email" class="w-full p-2 border rounded mt-1" required>
+														</label>
 
 														<div class="flex justify-end pt-3">
 																<button type="button" onclick="closeMediatorModal()" class="px-4 py-2 mr-2 text-gray-600">Cancel</button>
