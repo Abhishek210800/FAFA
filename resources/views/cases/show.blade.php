@@ -123,7 +123,7 @@
                     <div>
                         <strong>ID Proof:</strong>
                         @if($case->defandant_id_proof)
-                            <a href="{{ asset('storage/'.$case->defandant_id_proof) }}" class="text-blue-600 underline">View Current ID Proof</a>
+                            <a href="{{ asset('storage/'.$case->defandant_id_proof) }}" class="text-blue-600 underline" target =_blank>View Current ID Proof</a>
                         @else
                             Not uploaded
                         @endif
