@@ -274,413 +274,473 @@
 								<!-- Basic Details Ends -->
 
             <!-- Complainant/Petitioner/Appellant Details Accordion -->
+									<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
 
-								<!-- Complainant Type Selector -->
-							 <!-- Accordion Wrapper -->
-							<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
-
-									<!-- Accordion Header -->
-									<div class="flex justify-between items-center p-4 bg-[#28A644] text-white rounded-t-lg cursor-pointer" onclick="toggleComplainantAccordion()">
-											<legend class="text-md font-bold tracking-wide">Complainant/Petitioner/Appellant Details</legend>
+										<!-- Accordion Header -->
+										<div class="flex justify-between items-center p-4 bg-[#28A644] text-white rounded-t-lg cursor-pointer"
+												onclick="toggleComplainantAccordion()">
+											<legend class="text-md font-bold tracking-wide">Complainant / Petitioner / Appellant Details</legend>
 											<span id="complainant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
-									</div>
+										</div>
 
-									<!-- Accordion Content -->
-									<div id="complainant-accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
-							<div class="mb-6">
-									<label for="complainant_type" class="block text-gray-700 font-semibold text-sm mb-1">Complainant Type<span class="text-red-500">*</span></label>
-									<select id="complainant_type" name="complainant_type"
-											class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
-											onchange="toggleComplainantType()">
-											<option value="">Select Complainant Type</option>
-											<option value="individual" {{ old('complainant_type') == 'individual' ? 'selected' : '' }}>Individual</option>
-											<option value="entity" {{ old('complainant_type') == 'entity' ? 'selected' : '' }}>Entity</option>
-									</select>
-							</div>
+										<!-- Accordion Content -->
+										<div id="complainant-accordion-content"
+												class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
 
-							
-											
-											<!-- INDIVIDUAL FIELDS -->
-											<div id="individual-fields" class="{{ old('complainant_type') != 'entity' ? '' : 'hidden' }}">
-												<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">    	
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
-																	<input type="text" name="complainant_name" value="{{ old('complainant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter respondent's name">
-																</div>
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Father's Name<span class="text-red-500">*</span></label>
-																	<input type="text" name="complainant_father" value="{{ old('complainant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter father's name">
-																</div>
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Date of Birth<span class="text-red-500">*</span></label>
-																	<input type="date" name="complainant_dob" value="{{ old('complainant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-																</div>
-																<div>
-																		<label for="complainant_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender<span class="text-red-500">*</span></label>
-																			<select id="complainant_gender" name="complainant_gender" 
-																				class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-																				<option value="">Select Gender</option>
-																				<option value="Male" {{ old('complainant_gender') == 'Male' ? 'selected' : '' }}>Male</option>
-																				<option value="Female" {{ old('complainant_gender') == 'Female' ? 'selected' : '' }}>Female</option>
-																				<option value="Other" {{ old('complainant_gender') == 'Other' ? 'selected' : '' }}>Other</option>
-																			</select>
-
-																</div>
-
-															</div>
-
-															<!-- Second Row: 5 Columns -->
-															<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
-																	<input type="text" name="complainant_address" value="{{ old('complainant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter address">
-																</div>
-
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
-																	<select 
-																			name="complainant_state_id" 
-																			class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"  
-																			id="state_select_1"
-																			data-old-state="{{ old('complainant_state_id') }}"
-																			data-old-city="{{ old('complainant_city_id') }}"
-																			data-target="#city_select_1"
-																		>
-
-																			<option value="">Select State</option>
-																			@foreach ($states as $state)
-																					<option value="{{ $state->id }}" {{ old('complainant_state_id') == $state->id ? 'selected' : '' }}>
-																							{{ ucfirst(strtolower($state->name)) }}
-																					</option>
-																			@endforeach
-																	</select>
-
-															</div>
-															
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
-																	<select 
-																			name="complainant_city_id" 
-																			class="city-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" 
-																			id="city_select_1"
-																	>
-																			<option value="">Select City</option>
-																			@foreach ($cities as $city)
-																					<option value="{{ $city->id }}" {{ old('complainant_city_id') == $city->id ? 'selected' : '' }}>
-																							{{ $city->name }}
-																					</option>
-																			@endforeach
-																	</select>
-
-																</div>
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">District</label>
-																	<input type="text" name="complainant_district" value="{{ old('complainant_district') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
-																</div>
-																
-																<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
-																	<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode') }}"  class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter pincode">
-																</div>
-															</div>
-
-															<!-- Third Row: Mobile & Email -->
-															<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-																	<!-- Mobile Section -->
-																	<div>
-																			<label for="complainant_mobile" class="block text-gray-700 font-semibold text-sm">Mobile</label>
-																			<input 
-																					id="complainant_mobile"
-																					type="tel" 
-																					name="complainant_mobile" 
-																					value="{{ old('complainant_mobile') }}" 
-																					autocomplete="tel"
-																					pattern="[0-9]{10}"
-																					class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('complainant_mobile') border-red-600 @enderror" 
-																					placeholder="Mobile number"
-																			>
-																			@error('complainant_mobile')
-																					<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-																			@enderror
-																	</div>
-
-																	<!-- Email Section -->
-																	<div>
-																			<label for="complainant_email" class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span><span class="text-red-500">*</span></label>
-																			<input 
-																					id="complainant_email"
-																					type="email" 
-																					name="complainant_email" 
-																					value="{{ old('complainant_email') }}" 
-																					autocomplete="email"
-																					class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('complainant_email') border-red-600 @enderror" 
-																					placeholder="Email"
-																			>
-																			@error('complainant_email')
-																					<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-																			@enderror
-																	</div>
-															</div>
-
-
-															<!-- Fourth Row: Upload ID Proof -->
-															<div class="mt-6">
-																<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
-																<input type="file" name="complainant_id_proof" value="{{ old('complainant_id_proof') }}"  class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
-															</div>
+											<!-- Type Selector -->
+											<div class="mb-6">
+												<label for="complainant_type" class="block text-gray-700 font-semibold text-sm mb-1">
+													Complainant Type<span class="text-red-500">*</span>
+												</label>
+												<select id="complainant_type" name="complainant_type"
+																class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																onchange="toggleComplainantType()">
+													<option value="">Select Type</option>
+													<option value="individual" {{ old('complainant_type')=='individual'?'selected':'' }}>Individual</option>
+													<option value="entity"     {{ old('complainant_type')=='entity'    ?'selected':'' }}>Entity</option>
+												</select>
 											</div>
-													
+
+											<!-- INDIVIDUAL FIELDS -->
+											<div id="individual-fields" class="{{ old('complainant_type')!='entity'?'':'hidden' }}">
+												<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_name" value="{{ old('complainant_name') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter complainant’s name">
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Father’s Name<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_father" value="{{ old('complainant_father') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter father’s name">
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Date of Birth<span class="text-red-500">*</span></label>
+														<input type="date" name="complainant_dob" value="{{ old('complainant_dob') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm">
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Gender<span class="text-red-500">*</span></label>
+														<select name="complainant_gender"
+																		class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm">
+															<option value="">Select Gender</option>
+															<option value="Male"   {{ old('complainant_gender')=='Male'  ?'selected':'' }}>Male</option>
+															<option value="Female" {{ old('complainant_gender')=='Female'?'selected':'' }}>Female</option>
+															<option value="Other"  {{ old('complainant_gender')=='Other' ?'selected':'' }}>Other</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_address" value="{{ old('complainant_address') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter address">
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
+														<select name="complainant_state_id"
+																		id="state_select_1"
+																		class="state-select p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																		data-old-state="{{ old('complainant_state_id') }}"
+																		data-old-city="{{ old('complainant_city_id') }}"
+																		data-target="#city_select_1">
+															<option value="">Select State</option>
+															@foreach($states as $state)
+																<option value="{{ $state->id }}"
+																				{{ old('complainant_state_id')==$state->id?'selected':'' }}>
+																	{{ ucfirst(strtolower($state->name)) }}
+																</option>
+															@endforeach
+														</select>
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
+														<select name="complainant_city_id"
+																		id="city_select_1"
+																		class="city-select p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm">
+															<option value="">Select City</option>
+															@foreach($cities as $city)
+																<option value="{{ $city->id }}"
+																				{{ old('complainant_city_id')==$city->id?'selected':'' }}>
+																	{{ $city->name }}
+																</option>
+															@endforeach
+														</select>
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">District</label>
+														<input type="text" name="complainant_district" value="{{ old('complainant_district') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter district">
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter pincode">
+													</div>
+												</div>
+
+												<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Mobile</label>
+														<input type="tel" name="complainant_mobile" value="{{ old('complainant_mobile') }}"
+																	pattern="[0-9]{10}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Mobile number">
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
+														<input type="email" name="complainant_email" value="{{ old('complainant_email') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Email">
+													</div>
+												</div>
+
+												<div class="mt-6">
+													<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
+													<input type="file" name="complainant_id_proof"
+																class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 file:bg-blue-700 file:text-white file:px-4 file:py-2 rounded-lg cursor-pointer">
+												</div>
+											</div>
+											<!-- END INDIVIDUAL -->
 
 											<!-- ENTITY FIELDS -->
-											<div id="entity-fields" class="{{ old('complainant_type') == 'entity' ? '' : 'hidden' }}">
-													<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-															<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Name of Entity<span class="text-red-500">*</span></label>
-																	<input type="text" name="entity_name" value="{{ old('entity_name') }}" placeholder="Enter entity name"
-																			class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-															</div>
-															<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Authorised Representative<span class="text-red-500">*</span></label>
-																	<input type="text" name="entity_representative" value="{{ old('entity_representative') }}" placeholder="Enter representative name"
-																			class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-															</div>
+											<div id="entity-fields" class="{{ old('complainant_type')=='entity'?'':'hidden' }}">
+												<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Name of Entity<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_name" value="{{ old('complainant_name') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter entity’s name">
 													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Authorised Representative<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_father" value="{{ old('complainant_father') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter representative’s name">
+													</div>
+												</div>
 
-													<div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-															<div>
-																	<label class="block text-gray-700 font-semibold text-sm">Date of Incorporation<span class="text-red-500">*</span></label>
-																	<input type="date" name="entity_incorporation_date" value="{{ old('entity_incorporation_date') }}"
-																			class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-															</div>
-															<div>
-																	<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
-																	<select name="entity_state_id" id="state_select_entity" data-target="#city_select_entity"
-																			class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-																			<option value="">Select State</option>
-																			@foreach ($states as $state)
-																					<option value="{{ $state->id }}" {{ old('entity_state_id') == $state->id ? 'selected' : '' }}>
-																							{{ ucfirst(strtolower($state->name)) }}
-																					</option>
-																			@endforeach
-																	</select>
-															</div>
-															<div>
-																	<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
-																	<select name="entity_city_id" id="city_select_entity"
-																			class="city-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-																			<option value="">Select City</option>
-																			@foreach ($cities as $city)
-																					<option value="{{ $city->id }}" {{ old('entity_city_id') == $city->id ? 'selected' : '' }}>
-																							{{ $city->name }}
-																					</option>
-																			@endforeach
-																	</select>
-															</div>
+												<div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Date of Incorporation<span class="text-red-500">*</span></label>
+														<input type="date" name="complainant_dob" value="{{ old('complainant_dob') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm">
 													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
+														<select name="complainant_state_id"
+																		id="state_select_entity"
+																		class="state-select p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																		data-old-state="{{ old('complainant_state_id') }}"
+																		data-old-city="{{ old('complainant_city_id') }}"
+																		data-target="#city_select_entity">
+															<option value="">Select State</option>
+															@foreach($states as $state)
+																<option value="{{ $state->id }}"
+																				{{ old('complainant_state_id')==$state->id?'selected':'' }}>
+																	{{ ucfirst(strtolower($state->name)) }}
+																</option>
+															@endforeach
+														</select>
+													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
+														<select name="complainant_city_id"
+																		id="city_select_entity"
+																		class="city-select p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm">
+															<option value="">Select City</option>
+															@foreach($cities as $city)
+																<option value="{{ $city->id }}"
+																				{{ old('complainant_city_id')==$city->id?'selected':'' }}>
+																	{{ $city->name }}
+																</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
 
-													<div class="mt-6">
-															<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
-															<input type="text" name="entity_address" value="{{ old('entity_address') }}" placeholder="Enter address"
-																	class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-													</div>
+												<div class="mt-6">
+													<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
+													<input type="text" name="complainant_address" value="{{ old('complainant_address') }}"
+																class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																placeholder="Enter address">
+												</div>
 
-													<div class="mt-6">
-															<label class="block text-gray-700 font-semibold text-sm">Incorporation Certificate<span class="text-red-500">*</span></label>
-															<input type="file" name="entity_certificate"
-																	class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600">
+												<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
+														<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter pincode">
 													</div>
+													<div>
+														<label class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
+														<input type="email" name="complainant_email" value="{{ old('complainant_email') }}"
+																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																	placeholder="Enter email">
+													</div>
+												</div>
+
+												<div class="mt-6">
+													<label class="block text-gray-700 font-semibold text-sm">Upload Incorporation Certificate<span class="text-red-500">*</span></label>
+													<input type="file" name="complainant_id_proof"
+																class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 file:bg-blue-700 file:text-white file:px-4 file:py-2 rounded-lg cursor-pointer">
+												</div>
 											</div>
+											<!-- END ENTITY -->
+
+										</div>
 									</div>
-							</div>
 
-							<!-- Toggle JS -->
-							<script>
-									function toggleComplainantAccordion() {
-											const content = document.getElementById("complainant-accordion-content");
-											const icon = document.getElementById("complainant-accordion-icon");
-											content.classList.toggle("hidden");
-											icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
-									}
+									<script>
+										function toggleComplainantAccordion() {
+											const content = document.getElementById('complainant-accordion-content');
+											const icon    = document.getElementById('complainant-accordion-icon');
+											const hidden  = content.classList.toggle('hidden');
+											icon.style.transform = hidden ? 'rotate(0deg)' : 'rotate(180deg)';
+										}
 
-									function toggleComplainantType() {
-											const type = document.getElementById("complainant_type").value;
-											const individualFields = document.getElementById("individual-fields");
-											const entityFields = document.getElementById("entity-fields");
+										function toggleComplainantType() {
+											const t  = document.getElementById('complainant_type').value;
+											const iF = document.getElementById('individual-fields');
+											const eF = document.getElementById('entity-fields');
+											iF.classList.toggle('hidden', t!=='individual');
+											eF.classList.toggle('hidden', t!=='entity');
+										}
 
-											if (type === "individual") {
-													individualFields.classList.remove("hidden");
-													entityFields.classList.add("hidden");
-											} else if (type === "entity") {
-													entityFields.classList.remove("hidden");
-													individualFields.classList.add("hidden");
-											} else {
-													individualFields.classList.add("hidden");
-													entityFields.classList.add("hidden");
-											}
-									}
-
-									// Run once on page load if old value exists
-									window.onload = toggleComplainantType;
-							</script>
+										window.onload = toggleComplainantType;
+									</script>
 
               
             
             <!-- Complainant/Petitioner/Appellant Details Ends -->
 
-             <!-- Defendant (Multiple) Details -->
+            <!-- Defendant (Multiple) Details -->
 
-          
-					  <div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
-						<!-- Accordion Header -->
-						<div class="flex justify-between items-center p-4 bg-[#17A2B8] text-white rounded-t-lg cursor-pointer" onclick="toggleDefendantAccordion()">
-							<legend class="text-md font-bold tracking-wide">Defendent/Respondent Details</legend>
-							<span id="defendant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
+						<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
+								<!-- Accordion Header -->
+								<div class="flex justify-between items-center p-4 bg-[#17A2B8] text-white rounded-t-lg cursor-pointer" onclick="toggleDefendantAccordion()">
+										<legend class="text-md font-bold tracking-wide">Defendant/Respondent Details</legend>
+										<span id="defendant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
+								</div>
+
+								<!-- Accordion Content -->
+								<fieldset id="defendant-accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
+										
+										<!-- Dropdown to select Defendant Type -->
+										<div class="mb-4">
+												<label for="defendant_type" class="block text-gray-700 font-semibold text-sm"> Defendant Type<span class="text-red-500">*</span></label>
+												<select id="defendant_type" name="defendant_type" onchange="toggleDefendantType()" 
+																class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
+														<option value="">Select Defendant Type</option>
+														<option value="individual">Individual Defendant</option>
+														<option value="entity">Entity Defendant</option>
+												</select>
+										</div>
+
+										<!-- Individual Defendant Form -->
+										<div id="individual-defendant-form" class="space-y-6 hidden">
+												<!-- First Row -->
+												<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_name" value="{{ old('defendant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Father's Name<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_father" value="{{ old('defendant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Date of Birth<span class="text-red-500">*</span></label>
+																<input type="date" name="defendant_dob" value="{{ old('defendant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Gender<span class="text-red-500">*</span></label>
+																<select name="defendant_gender" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm">
+																		<option value="">Select Gender</option>
+																		<option value="Male" {{ old('defendant_gender') == 'Male' ? 'selected' : '' }}>Male</option>
+																		<option value="Female" {{ old('defendant_gender') == 'Female' ? 'selected' : '' }}>Female</option>
+																		<option value="Other" {{ old('defendant_gender') == 'Other' ? 'selected' : '' }}>Other</option>
+																</select>
+														</div>
+												</div>
+
+												<!-- Second Row -->
+												<div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_address" value="{{ old('defendant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
+																<select name="defendant_state_id"
+																			class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm"
+																			id="state_select_2"
+																			data-old-state="{{ old('defendant_state_id') }}"
+																			data-old-city="{{ old('defendant_city_id') }}"
+																			data-target="#city_select_2">
+																			<option value="">Select State</option>
+																			@foreach ($states as $state)
+																					<option value="{{ $state->id }}" {{ old('defendant_state_id') == $state->id ? 'selected' : '' }}>{{ ucfirst(strtolower($state->name)) }}</option>
+																			@endforeach
+																	</select>
+														</div>
+														<div>
+															<label class="block text-gray-700 font-semibold text-sm">City</label>
+															<select name="defendant_city_id"
+																			class="city-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+																			id="city_select_2">
+																	<option value="">Select City</option>
+															</select>
+														</div>
+
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">District<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_district" value="{{ old('defendant_district') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter district">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_pincode" value="{{ old('defendant_pincode') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode">
+														</div>
+												</div>
+
+												<!-- Third Row -->
+												<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Mobile</label>
+																<input type="tel" name="defendant_mobile" value="{{ old('defendant_mobile') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter 10-digit mobile number">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
+																<input type="email" name="defendant_email" value="{{ old('defendant_email') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter email address">
+														</div>
+												</div>
+
+												<!-- Fourth Row -->
+												<div>
+														<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
+														<input type="file" name="defandant_id_proof" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600">
+												</div>
+										</div>
+
+										<!-- Entity Defendant Form -->
+										<div id="entity-defendant-form" class="space-y-6 hidden">
+											<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_name" value="{{ old('defendant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Authorised Representative<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_father" value="{{ old('defendant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
+														</div>														
+														
+												</div>
+
+												<!-- Second Row -->
+												<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+													<div>
+																<label class="block text-gray-700 font-semibold text-sm">Date of Incorporation<span class="text-red-500">*</span></label>
+																<input type="date" name="defendant_dob" value="{{ old('defendant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_address" value="{{ old('defendant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
+														</div>
+														<div>
+															<label class="block text-gray-700 font-semibold text-sm">
+																State<span class="text-red-500">*</span>
+															</label>
+															<select name="defendant_state_id"
+																			id="state_select_entity_defendant"
+																			class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm"
+																			data-old-state="{{ old('defendant_state_id') }}"
+																			data-old-city="{{ old('defendant_city_id') }}"
+																			data-target="#city_select_entity_defendant">
+																<option value="">Select State</option>
+																@foreach ($states as $state)
+																	<option value="{{ $state->id }}" {{ old('defendant_state_id') == $state->id ? 'selected' : '' }}>
+																		{{ ucfirst(strtolower($state->name)) }}
+																	</option>
+																@endforeach
+															</select>
+														</div>
+
+														<div>
+															<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
+															<select name="defendant_city_id"
+																			id="city_select_entity_defendant"
+																			class="city-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
+																<option value="">Select City</option>
+																@if(old('defendant_city_id') && old('defendant_state_id'))
+																	@php
+																		$oldStateId = old('defendant_state_id');
+																		$oldCityId = old('defendant_city_id');
+																		$citiesForOldState = \App\Models\City::where('state_id', $oldStateId)->get();
+																	@endphp
+																	@foreach($citiesForOldState as $city)
+																		<option value="{{ $city->id }}" {{ $city->id == $oldCityId ? 'selected' : '' }}>{{ $city->name }}</option>
+																	@endforeach
+																@endif
+															</select>
+														</div>
+
+														
+												</div>
+
+												<!-- Third Row -->
+												<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
+																<input type="text" name="defendant_pincode" value="{{ old('defendant_pincode') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode">
+														</div>
+														<div>
+																<label class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
+																<input type="email" name="defendant_email" value="{{ old('defendant_email') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter email address">
+														</div>
+												</div>
+
+												<!-- Fourth Row -->
+												<div>
+														<label class="block text-gray-700 font-semibold text-sm">Incorporation Certificate</label>
+														<input type="file" name="defandant_id_proof" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600">
+												</div>
+										</div>
+								</fieldset>
 						</div>
 
-						<!-- Accordion Content -->
-						<fieldset id="defendant-accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
-							
-							<!-- First Row: 4 Columns -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Name<span class="text-red-500">*</span></label>
-									<input type="text" name="defendant_name" value="{{ old('defendant_name') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Father's Name<span class="text-red-500">*</span></label>
-									<input type="text" name="defendant_father" value="{{ old('defendant_father') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Date of Birth<span class="text-red-500">*</span></label>
-									<input type="date" name="defendant_dob" value="{{ old('defendant_dob') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Gender<span class="text-red-500">*</span></label>
-									<select name="defendant_gender" 
-											class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-											<option value="">Select Gender</option>
-											<option value="Male" {{ old('defendant_gender') == 'Male' ? 'selected' : '' }}>Male</option>
-											<option value="Female" {{ old('defendant_gender') == 'Female' ? 'selected' : '' }}>Female</option>
-											<option value="Other" {{ old('defendant_gender') == 'Other' ? 'selected' : '' }}>Other</option>
-									</select>
-							</div>
+						<!-- JavaScript to Toggle -->
+						<script>
+								function toggleDefendantAccordion() {
+										const content = document.getElementById("defendant-accordion-content");
+										const icon = document.getElementById("defendant-accordion-icon");
+										content.classList.toggle("hidden");
+										icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
+								}
 
-							</div>
+								function toggleDefendantType() {
+										const type = document.getElementById("defendant_type").value;
+										const individual = document.getElementById("individual-defendant-form");
+										const entity = document.getElementById("entity-defendant-form");
 
-							<!-- Second Row: 5 Columns -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
-									<input type="text" name="defendant_address" value="{{ old('defendant_address') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
-								</div>
-								<div>
-										<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
-										<select 
-												name="defendant_state_id" 
-												class="state-select p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"  
-												id="state_select_2"
-												data-old-state="{{ old('defendant_state_id') }}"
-												data-old-city="{{ old('defendant_city_id') }}"
-												data-target="#city_select_2"
-											>
-												<option value="">Select State<span class="text-red-500">*</span></option>
-												@foreach ($states as $state)
-														<option value="{{ $state->id }}" {{ old('defendant_state_id') == $state->id ? 'selected' : '' }}>
-																{{ ucfirst(strtolower($state->name)) }}
-														</option>
+										individual.classList.add("hidden");
+										entity.classList.add("hidden");
 
-												@endforeach
-										</select>
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">City<span class="text-red-500">*</span></label>
-									<select name="defendant_city_id" class="city-select  p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" id="city_select_2" name="city_id_2">
-											<option value="">Select City</option>
-											@foreach ($cities as $city)
-														<option value="{{ $city->id }}" {{ old('complainant_city_id') == $city->id ? 'selected' : '' }}>
-																{{ $city->name }}
-														</option>
-												@endforeach
-									</select>
-							</div>
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">District<span class="text-red-500">*</span></label>
-										<input type="text" name="defendant_district" value="{{ old('defendant_district') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
-									</div>
-									
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Pincode<span class="text-red-500">*</span></label>
-									<input type="text" name="defendant_pincode" value="{{ old('defendant_pincode') }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode">
-								</div>
-							</div>
+										if (type === "individual") {
+												individual.classList.remove("hidden");
+										} else if (type === "entity") {
+												entity.classList.remove("hidden");
+										}
+								}
+						</script>
 
-							<!-- Third Row: Mobile & Email -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-									<!-- Mobile Section -->
-									<div>
-											<label for="defendant_mobile" class="block text-gray-700 font-semibold text-sm">Mobile</label>
-											<input 
-													id="defendant_mobile"
-													type="tel" 
-													name="defendant_mobile" 
-													value="{{ old('defendant_mobile') }}" 
-													autocomplete="tel"
-													inputmode="numeric"
-													pattern="^[0-9]{10}$"
-													required
-													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('defendant_mobile') border-red-600 @enderror" 
-													placeholder="Enter 10-digit mobile number"
-											>
-											@error('defendant_mobile')
-													<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-											@enderror
-									</div>
-
-									<!-- Email Section -->
-									<div>
-											<label for="defendant_email" class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
-											<input 
-													id="defendant_email"
-													type="email" 
-													name="defendant_email" 
-													value="{{ old('defendant_email') }}" 
-													autocomplete="email"
-													required
-													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('defendant_email') border-red-600 @enderror" 
-													placeholder="Enter email address"
-											>
-											@error('defendant_email')
-													<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-											@enderror
-									</div>
-							</div>
-
-							<!-- Fourth Row: Upload ID Proof -->
-								<div class="mt-6">
-									<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
-									<input type="file" name="defandant_id_proof" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all">
-								</div>
-
-							<!-- Action Buttons -->
-							<!-- <div class="flex justify-end space-x-4 mt-6">
-								<button class="bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-all">Save</button>
-								<button class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-400 transition-all">Save and Add Another</button>
-								<button class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-500 transition-all">Send Notice</button>
-							</div> -->
-						</fieldset>
-					</div>
-
-					<script>
-						function toggleDefendantAccordion() {
-							const content = document.getElementById("defendant-accordion-content");
-							const icon = document.getElementById("defendant-accordion-icon");
-							content.classList.toggle("hidden");
-							icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
-						}
-					</script>
-
-             <!-- Defendant Ends -->
-
+						<!--- Defandant ends here-->
 
 						<!-- Assigned moderator ands advocates Details -->
 

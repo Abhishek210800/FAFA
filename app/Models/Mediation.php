@@ -19,7 +19,7 @@ class Mediation extends Model
         'defendant_pincode', 'defendant_mobile', 'defendant_email','defandant_id_proof',
 
         'subject_id', 'issue_id', 'statute_id',
-        'complainant_advocate_id', 'defendant_advocate_id', 'mediator_id','status', 
+        'complainant_advocate_id', 'defendant_advocate_id', 'mediator_id','status','complainant_type','defendant_type' 
     ];
 
     public function complainant()

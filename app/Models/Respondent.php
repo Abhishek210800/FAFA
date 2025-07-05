@@ -23,6 +23,7 @@ class Respondent extends Model
         'mobile',
         'email',
         'id_proof',
+        'defendant_type'
     ];
 
     public function mediation()

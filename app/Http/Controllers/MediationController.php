@@ -87,164 +87,170 @@ class MediationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'case_number' => 'required|string|unique:mediations,case_number',
-            'court_id' => 'required|exists:court_mast,AG_Courtcode',
-            'judge_name' => 'required|string|max:255',
+            'case_number'         => 'required|string|unique:mediations,case_number',
+            'court_id'            => 'required|exists:court_mast,AG_Courtcode',
+            'judge_name'          => 'required|string|max:255',
+            'reference_date'      => 'required|date',
+            'mediation_date'      => 'required|date|after_or_equal:reference_date',
 
-            'reference_date' => 'required|date',
-            'mediation_date' => 'required|date',
+            'complainant_type'    => 'required|in:individual,entity',
+            'defendant_type'    => 'required|in:individual,entity',
 
-            'complainant_email' => 'required|email|unique:complainants,email|unique:users,email',
-            'defendant_email' => 'required|email|unique:respondents,email|unique:users,email',
+            // these fields always map to the same DB columns:
+            'complainant_name'    => 'required|string|max:255',
+            'complainant_father' => 'required_if:complainant_type,individual,entity|string|max:255',
+            'complainant_dob'     => ['required','date','before:mediation_date'],
+            'complainant_gender' => ['nullable','in:Male,Female,Other','required_if:complainant_type,individual',],
+            'complainant_address' => 'required|string',
+            'complainant_state_id'=> 'required|exists:states,id',
+            'complainant_city_id' => 'required|exists:cities,id',
+            'complainant_pincode' => 'required|numeric',
+            'complainant_email'   => 'required|email|unique:complainants,email|unique:users,email',
 
-            'complainant_dob' => ['required', 'date', 'before:reference_date', 'before:mediation_date'],
-            'defendant_dob' => ['required', 'date', 'before:reference_date', 'before:mediation_date'],
+            // respondent (defendant) fields
+            'defendant_name'      => 'required|string|max:255',
+            'defendant_father'    => 'required_if:defendant_type,individual|string|max:255',
+            'defendant_dob'       => ['required','date','before:mediation_date'],
+            'defendant_gender'    => ['nullable','in:Male,Female,Other','required_if:defendant_type,individual',],
+            'defendant_address'   => 'required|string',
+            'defendant_state_id'  => 'required|exists:states,id',
+            'defendant_city_id'   => 'exists:cities,id',
+            'defendant_pincode'   => 'required|numeric',
+            'defendant_email'     => 'required|email|unique:respondents,email|unique:users,email',
         ], [
-            'complainant_dob.before' => 'Complainant Date of Birth must be before the Reference and Mediation Dates.',
-            'defendant_dob.before' => 'Defendant Date of Birth must be before the Reference and Mediation Dates.',
+            'complainant_dob.before' => 'Complainant Date must be before the mediation date.',
+            'defendant_dob.before'   => 'Defendant Date must be before the mediation date.',
         ]);
 
-        $judge = JudgeMast::firstOrCreate(
-            ['Judge_Name' => $request->judge_name, 'AG_Courtcode' => $request->court_id],
-            [
-                'AGJudgecode' => uniqid('J'),
-                'Count_code' => CourtMast::where('AG_Courtcode', $request->court_id)->value('Count_code'),
-            ]
-        );
-
-        // File uploads
-        if ($request->hasFile('order_file')) {
-            $validated['order_file'] = $request->file('order_file')->store('orders');
-        }
-
-        if ($request->hasFile('case_file')) {
-            $validated['case_file'] = $request->file('case_file')->store('cases');
-        }
-
-        if ($request->hasFile('complainant_id_proof')) {
-            $complainant_id_proof = $request->file('complainant_id_proof')->store('id_proofs');
-        }
-
-        if ($request->hasFile('defandant_id_proof')) {
-            $defandant_id_proof = $request->file('defandant_id_proof')->store('id_proofs');
-        }
-
-        $mediation = Mediation::create([
-            'court_id' => $request->court_id,
-            'judge_id' => $judge->AGJudgecode,
-            'case_number' => $request->case_number,
-            'reference_date' => $request->reference_date,
-            'mediation_date' => $request->mediation_date,
-            'order_file' => $validated['order_file'] ?? null,
-            'case_file' => $validated['case_file'] ?? null,
-
-            'subject_id' => $request->subject_id,
-            'issue_id' => $request->issue_id,
-            'statute_id' => $request->statute_id,
-
-            'complainant_advocate_id' => $request->complainant_advocate_id,
-            'defendant_advocate_id' => $request->defendant_advocate_id,
-            'mediator_id' => $request->mediator_id,
-
-            'complainant_name' => $request->complainant_name,
-            'complainant_father' => $request->complainant_father,
-            'complainant_dob' => $request->complainant_dob,
-            'complainant_gender' => $request->complainant_gender,
-            'complainant_address' => $request->complainant_address,
-            'complainant_state_id' => $request->complainant_state_id,
-            'complainant_city_id' => $request->complainant_city_id,
-            'complainant_district' => $request->complainant_district,
-            'complainant_pincode' => $request->complainant_pincode,
-            'complainant_mobile' => $request->complainant_mobile,
-            'complainant_email' => $request->complainant_email,
-            'complainant_id_proof' => $complainant_id_proof ?? null,
-
-            'defendant_name' => $request->defendant_name,
-            'defendant_father' => $request->defendant_father,
-            'defendant_dob' => $request->defendant_dob,
-            'defendant_gender' => $request->defendant_gender,
-            'defendant_address' => $request->defendant_address,
-            'defendant_state_id' => $request->defendant_state_id,
-            'defendant_city_id' => $request->defendant_city_id,
-            'defendant_district' => $request->defendant_district,
-            'defendant_pincode' => $request->defendant_pincode,
-            'defendant_mobile' => $request->defendant_mobile,
-            'defendant_email' => $request->defendant_email,
-            'defandant_id_proof' => $defandant_id_proof ?? null,
-        ]);
-
-        // Save related complainant
-        $mediation->complainant()->create([
-            'name' => $request->complainant_name,
-            'father' => $request->complainant_father,
-            'dob' => $request->complainant_dob,
-            'gender' => $request->complainant_gender,
-            'address' => $request->complainant_address,
-            'state_id' => $request->complainant_state_id,
-            'city_id' => $request->complainant_city_id,
-            'district' => $request->complainant_district,
-            'pincode' => $request->complainant_pincode,
-            'mobile' => $request->complainant_mobile,
-            'email' => $request->complainant_email,
-            'id_proof' => $complainant_id_proof ?? null,
-        ]);
-
-        // Save related respondent
-        $mediation->respondent()->create([
-            'name' => $request->defendant_name,
-            'father' => $request->defendant_father,
-            'dob' => $request->defendant_dob,
-            'gender' => $request->defendant_gender,
-            'address' => $request->defendant_address,
-            'state_id' => $request->defendant_state_id,
-            'city_id' => $request->defendant_city_id,
-            'district' => $request->defendant_district,
-            'pincode' => $request->defendant_pincode,
-            'mobile' => $request->defendant_mobile,
-            'email' => $request->defendant_email,
-            'id_proof' => $defandant_id_proof ?? null,
-        ]);
-
-        // User Creata and Email send
-        $complainantPassword = Str::random(10);
-        $respondentPassword = Str::random(10);
-
-        User::create([
-            'name' => $request->complainant_name,
-            'email' => $request->complainant_email,
-            'mobile' => $request->complainant_mobile,
-            'password' => Hash::make($complainantPassword),
-            'role_id' => 3, // complainant role
-        ]);
-
-        User::create([
-            'name' => $request->defendant_name,
-            'email' => $request->defendant_email,
-            'mobile' => $request->defendant_mobile,
-            'password' => Hash::make($respondentPassword),
-            'role_id' => 4, // respondent role
-        ]);
-
+        DB::beginTransaction();
         try {
-            Mail::to($request->complainant_email)->send(new WelcomeEmail(
-                $request->complainant_name,
-                $request->complainant_email,
-                $complainantPassword,
-                'complainant'
-            ));
+            // 1) Judge:
+            $judge = JudgeMast::firstOrCreate(
+                ['Judge_Name'=> $request->judge_name, 'AG_Courtcode'=> $request->court_id],
+                [
+                    'AGJudgecode'=> uniqid('J'),
+                    'Count_code' => CourtMast::where('AG_Courtcode',$request->court_id)->value('Count_code'),
+                ]
+            );
 
-            Mail::to($request->defendant_email)->send(new WelcomeEmail(
-                $request->defendant_name,
-                $request->defendant_email,
-                $respondentPassword,
-                'respondent'
-            ));
-        } catch (\Exception $e) {
-            Log::error('Email sending failed: ' . $e->getMessage());
+            // 2) Files:
+            $orderFile            = $request->file('order_file')           ? $request->file('order_file')->store('orders')    : null;
+            $caseFile             = $request->file('case_file')            ? $request->file('case_file')->store('cases')      : null;
+            $complainantIdProof   = $request->file('complainant_id_proof') ? $request->file('complainant_id_proof')->store('id_proofs') : null;
+            $defandantIdProof     = $request->file('defandant_id_proof')   ? $request->file('defandant_id_proof')->store('id_proofs')   : null;
+
+            // 3) Mediation:
+            $mediation = Mediation::create([
+                'court_id'               => $request->court_id,
+                'judge_id'               => $judge->AGJudgecode,
+                'case_number'            => $request->case_number,
+                'reference_date'         => $request->reference_date,
+                'mediation_date'         => $request->mediation_date,
+                'order_file'             => $orderFile,
+                'case_file'              => $caseFile,
+                'subject_id'             => $request->subject_id,
+                'issue_id'               => $request->issue_id,
+                'statute_id'             => $request->statute_id,
+                'complainant_advocate_id' => $request->complainant_advocate_id,
+                'defendant_advocate_id'   => $request->defendant_advocate_id,
+                'mediator_id'             => $request->mediator_id,
+
+                // complainant fields
+                'complainant_type'       => $request->complainant_type,
+                'complainant_name'       => $request->complainant_name,
+                'complainant_father'     => $request->complainant_father,
+                'complainant_dob'        => $request->complainant_dob,
+                'complainant_gender'     => $request->complainant_gender,
+                'complainant_address'    => $request->complainant_address,
+                'complainant_state_id'   => $request->complainant_state_id,
+                'complainant_city_id'    => $request->complainant_city_id,
+                'complainant_pincode'    => $request->complainant_pincode,
+                'complainant_email'      => $request->complainant_email,
+                'complainant_id_proof'   => $complainantIdProof,
+                // defendant fields
+                'defendant_type'       => $request->defendant_type,
+                'defendant_name'         => $request->defendant_name,
+                'defendant_father'       => $request->defendant_father,
+                'defendant_dob'          => $request->defendant_dob,
+                'defendant_gender'       => $request->defendant_gender,
+                'defendant_address'      => $request->defendant_address,
+                'defendant_state_id'     => $request->defendant_state_id,
+                'defendant_city_id'      => $request->defendant_city_id,
+                'defendant_pincode'      => $request->defendant_pincode,
+                'defendant_email'        => $request->defendant_email,
+                'defandant_id_proof'     => $defandantIdProof,
+            ]);
+
+            // 4) Related models:
+            $mediation->complainant()->create([
+                'name'     => $request->complainant_name,
+                'father'   => $request->complainant_father,
+                'dob'      => $request->complainant_dob,
+                'gender'   => $request->complainant_gender,
+                'address'  => $request->complainant_address,
+                'state_id' => $request->complainant_state_id,
+                'city_id'  => $request->complainant_city_id,
+                'pincode'  => $request->complainant_pincode,
+                'email'    => $request->complainant_email,
+                'id_proof' => $complainantIdProof,
+                'complainant_type' => $request->complainant_type,
+                
+            ]);
+
+            $mediation->respondent()->create([
+                'name'     => $request->defendant_name,
+                'father'   => $request->defendant_father,
+                'dob'      => $request->defendant_dob,
+                'gender'   => $request->defendant_gender,
+                'address'  => $request->defendant_address,
+                'state_id' => $request->defendant_state_id,
+                'city_id'  => $request->defendant_city_id,
+                'pincode'  => $request->defendant_pincode,
+                'email'    => $request->defendant_email,
+                'id_proof' => $defandantIdProof,
+                'defendant_type' => $request->defendant_type,
+            ]);
+
+            // 5) Create Users & Send Emails:
+            $complainantPassword = Str::random(10);
+            $respondentPassword  = Str::random(10);
+
+            User::create([
+                'name'     => $request->complainant_name,
+                'email'    => $request->complainant_email,
+                'mobile'   => $request->complainant_mobile,
+                'password' => Hash::make($complainantPassword),
+                'role_id'  => 3,
+            ]);
+
+            User::create([
+                'name'     => $request->defendant_name,
+                'email'    => $request->defendant_email,
+                'mobile'   => $request->defendant_mobile,
+                'password' => Hash::make($respondentPassword),
+                'role_id'  => 4,
+            ]);
+
+            try {
+                Mail::to($request->complainant_email)
+                    ->queue(new WelcomeEmail($request->complainant_name, $request->complainant_email, $complainantPassword, 'complainant'));
+
+                Mail::to($request->defendant_email)
+                    ->queue(new WelcomeEmail($request->defendant_name, $request->defendant_email, $respondentPassword, 'respondent'));
+            } catch (\Exception $e) {
+                Log::error('Email send failed: '.$e->getMessage());
+            }
+
+            DB::commit();
+            return redirect()->route('dashboard')->with('success','Mediation record stored successfully!');
         }
-
-        return redirect()->route('dashboard')->with('success', 'Mediation record stored in all 3 tables and credentials sent!');
+        catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Store mediation failed: '.$e->getMessage());
+            return back()->withErrors('Something went wrong. Please try again.');
+        }
     }
+
   
 
 
@@ -497,12 +503,12 @@ class MediationController extends Controller
             }
 
             // Handle defendant id proof
-            $defendantIdProof = $mediation->respondent->id_proof ?? null;
+            $defandantIdProof = $mediation->respondent->id_proof ?? null;
             if ($request->hasFile('defandant_id_proof_file')) {
-                if ($defendantIdProof) {
-                    Storage::disk('public')->delete($defendantIdProof);
+                if ($defandantIdProof) {
+                    Storage::disk('public')->delete($defandantIdProof);
                 }
-                $defendantIdProof = $request->file('defandant_id_proof_file')->store('id_proofs', 'public');
+                $defandantIdProof = $request->file('defandant_id_proof_file')->store('id_proofs', 'public');
             }
 
             
@@ -518,7 +524,7 @@ class MediationController extends Controller
             // }
 
             // if ($mediation->respondent) {
-            //     $mediation->respondent->id_proof = $defendantIdProof;
+            //     $mediation->respondent->id_proof = $defandantIdProof;
             //     $mediation->respondent->save();
             // }
 
@@ -565,7 +571,7 @@ class MediationController extends Controller
                 'defendant_pincode' => $validatedData['defendant_pincode'] ?? null,
                 'defendant_mobile' => $validatedData['defendant_mobile'] ?? null,
                 'defendant_email' => $validatedData['defendant_email'] ?? null,
-                'defandant_id_proof' => $defendantIdProof,
+                'defandant_id_proof' => $defandantIdProof,
             ]);
 
             // Update complainant (related table)
@@ -600,7 +606,7 @@ class MediationController extends Controller
                     'pincode' => $validatedData['defendant_pincode'] ?? null,
                     'mobile' => $validatedData['defendant_mobile'] ?? null,
                     'email' => $validatedData['defendant_email'] ?? null,
-                    'id_proof' => $defendantIdProof,
+                    'id_proof' => $defandantIdProof,
                 ]);
             }
         });

@@ -22,7 +22,8 @@ class Complainant extends Model
         'pincode',
         'mobile',
         'email',
-        'id_proof',
+        'id_proof', 
+        'complainant_type'
     ];
 
    public function mediation()

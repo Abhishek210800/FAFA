@@ -63,14 +63,13 @@
 											<label class="block text-gray-700 font-semibold text-sm">Name of Judge</label>                                                      
 
 											<input type="text" 
-                                            name="judge_display" 
-                                            id="judge_display"
-                                            value="{{ old('judge_display', $mediation->judge->Judge_Name ?? 'Unknown') }}"
-                                            class="p-3 border border-gray-300 bg-gray-100 text-gray-700 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"
-                                            autocomplete="off" 
-                                            readonly>
+                        name="judge_display" 
+                        id="judge_display"
+                        value="{{ old('judge_display', $mediation->judge->Judge_Name ?? 'Unknown') }}"
+                        class="p-3 border border-gray-300 bg-gray-100 text-gray-700 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105"
+                        autocomplete="off"readonly>
 
-                                        <input type="hidden" name="judge_id" value="{{ $mediation->judge_id }}">
+                        <input type="hidden" name="judge_id" value="{{ $mediation->judge_id }}">
 
                                                     
 											<datalist id="judge_suggestions"></datalist>
@@ -141,291 +140,368 @@
 								
 								<!-- Basic Details Ends -->
 
-              <!-- Complainant/Petitioner/Appellant Details Accordion -->
+             <!-- Complainant/Petitioner/Appellant Details Accordion -->
+								<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
+										<!-- Accordion Header -->
+										<div class="flex justify-between items-center p-4 bg-[#28A644] text-white rounded-t-lg cursor-pointer" onclick="toggleComplainantAccordion()">
+												<legend class="text-md font-bold tracking-wide">Complainant/Petitioner/Appellant Details</legend>
+												<span id="complainant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
+										</div>
 
-              
-						<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
-							<!-- Accordion Header -->
-							<div class="flex justify-between items-center p-4 bg-[#28A644] text-white rounded-t-lg cursor-pointer" onclick="toggleComplainantAccordion()">
-								<legend class="text-md font-bold tracking-wide">Complainant/Petitioner/Appellant Details</legend>
-								<span id="complainant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
-							</div>
+										<!-- Accordion Content -->
+										<fieldset id="complainant-accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
+												
+												<!-- Complainant Type Selection -->
+												<div class="mb-4">
+														<label class="inline-flex items-center mr-4">
+																<input type="radio" name="complainant_type" value="individual" class="form-radio"
+																		{{ old('complainant_type', $mediation->complainant_type ?? 'individual') === 'individual' ? 'checked' : '' }}>
+																<span class="ml-2">Individual</span>
+														</label>
+														<label class="inline-flex items-center">
+																<input type="radio" name="complainant_type" value="entity" class="form-radio"
+																		{{ old('complainant_type', $mediation->complainant_type ?? '') === 'entity' ? 'checked' : '' }}>
+																<span class="ml-2">Entity</span>
+														</label>
+												</div>
 
-							<!-- Accordion Content -->
-							<fieldset id="complainant-accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
-								
-								<!-- First Row: 4 Columns -->
-								
-								<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Name</label>
-										<input type="text" name="complainant_name" value="{{ old('complainant_name', $mediation->complainant_name) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter respondent's name">
-									</div>
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
-										<input type="text" name="complainant_father" value="{{ old('complainant_father', $mediation->complainant_father) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter father's name">
-									</div>
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Date of Birth</label>
-										<input type="date" name="complainant_dob" value="{{ old('complainant_dob', $mediation->complainant_dob) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-									</div>
-									<div>
-											<label for="complainant_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-												<select id="complainant_gender" name="complainant_gender" 
-													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105">
-                                                     @foreach(['Male', 'Female', 'Other'] as $gender)
-                                                        <option value="{{ $gender }}" @if(old('complainant_gender', $mediation->complainant_gender) == $gender) selected @endif>{{ $gender }}</option>
-                                                    @endforeach
+												<!-- Individual Fields -->
+												@if($mediation->complainant_type === 'individual')
+												<div class="individual-fields grid grid-cols-1 md:grid-cols-2 gap-4">
+
+														<div>
+												<label class="block text-gray-700 font-semibold text-sm">Name</label>
+												<input type="text" name="complainant_name" value="{{ old('complainant_name', $mediation->complainant_name) }}" class="p-3 border rounded-lg w-full" placeholder="Enter name">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
+												<input type="text" name="complainant_father" value="{{ old('complainant_father', $mediation->complainant_father) }}" class="p-3 border rounded-lg w-full" placeholder="Enter father's name">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Date of Birth</label>
+												<input type="date" name="complainant_dob" value="{{ old('complainant_dob', $mediation->complainant_dob) }}" class="p-3 border rounded-lg w-full">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Gender</label>
+												<select name="complainant_gender" class="p-3 border rounded-lg w-full">
+														@foreach(['Male', 'Female', 'Other'] as $gender)
+																<option value="{{ $gender }}" @if(old('complainant_gender', $mediation->complainant_gender) == $gender) selected @endif>{{ $gender }}</option>
+														@endforeach
 												</select>
-
-									</div>
-
-								</div>
-
-								<!-- Second Row: 5 Columns -->
-								<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Address</label>
-                                        <input type="text" name="complainant_address" value ="{{ old('complainant_address', $mediation->complainant_address) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
-									</div>
-
-                                    <div>
-										<label class="block text-gray-700 font-semibold text-sm">State</label>
-										<input type="text" 
-                                            name="complainant_state_display" 
-                                            id="complainant_state_display"
-                                            value="{{ optional($mediation->complainantState)->name }}"
-                                            class="w-full border p-2 rounded bg-gray-100 text-gray-700"
-                                            readonly>
-
-                                        <input type="hidden" name="complainant_state_id" value="{{ $mediation->complainant_state_id }}">
-
-
-								    </div>
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">City</label>
-										<input type="text" 
-                                            name="complainant_city_display" 
-                                            id="complainant_city_display"
-                                            value="{{ optional($mediation->complainantCity)->name ?? 'Unknown' }}"
-                                            class="w-full border p-2 rounded bg-gray-100 text-gray-700"
-                                            readonly>
-
-                                        <input type="hidden" name="complainant_city_id" value="{{ $mediation->complainant_city_id }}">
-
-								  </div>
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">District</label>
-										<input type="text" name="complainant_district" value="{{ old('complainant_district', $mediation->complainant_district) }}"class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
-									</div>
-									
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
-										<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode', $mediation->complainant_pincode) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter pincode" readonly>
-									</div>
-								</div>
-
-								<!-- Third Row: Mobile & Email -->
-								<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-										<!-- Mobile Section -->
-										<div>
-												<label for="complainant_mobile" class="block text-gray-700 font-semibold text-sm">Mobile</label>
-												<input 
-														id="complainant_mobile"
-														type="tel" 
-														name="complainant_mobile" 
-														 value="{{ old('complainant_mobile', $mediation->complainant_mobile) }}"
-														autocomplete="tel"
-														pattern="[0-9]{10}"
-														class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('complainant_mobile') border-red-600 @enderror" 
-														placeholder="Mobile number"
-												>
-												@error('complainant_mobile')
-														<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-												@enderror
 										</div>
 
-										<!-- Email Section -->
 										<div>
-												<label for="complainant_email" class="block text-gray-700 font-semibold text-sm">Email</label>
-												<input 
-														id="complainant_email"
-														type="email" 
-														name="complainant_email" 
-														value="{{ old('complainant_email', $mediation->complainant_email) }}" 
-														autocomplete="email"
-														class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('complainant_email') border-red-600 @enderror" 
-														placeholder="Email" readonly
-												>
+												<label class="block text-gray-700 font-semibold text-sm">Address</label>
+												<input type="text" name="complainant_address" value="{{ old('complainant_address', $mediation->complainant_address) }}" class="p-3 border rounded-lg w-full" placeholder="Enter address">
 										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">State</label>
+												<input type="text" name="complainant_state_display" value="{{ optional($mediation->complainantState)->name }}" class="p-3 border rounded-lg w-full bg-gray-100" readonly>
+												<input type="hidden" name="complainant_state_id" value="{{ $mediation->complainant_state_id }}">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">City</label>
+												<input type="text" name="complainant_city_display" value="{{ optional($mediation->complainantCity)->name ?? 'Unknown' }}" class="p-3 border rounded-lg w-full bg-gray-100" readonly>
+												<input type="hidden" name="complainant_city_id" value="{{ $mediation->complainant_city_id }}">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">District</label>
+												<input type="text" name="complainant_district" value="{{ old('complainant_district', $mediation->complainant_district) }}" class="p-3 border rounded-lg w-full" placeholder="Enter district">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
+												<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode', $mediation->complainant_pincode) }}" class="p-3 border rounded-lg w-full" placeholder="Enter pincode" readonly>
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Mobile</label>
+												<input type="tel" name="complainant_mobile" pattern="[0-9]{10}" value="{{ old('complainant_mobile', $mediation->complainant_mobile) }}" class="p-3 border rounded-lg w-full" placeholder="Mobile number">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Email</label>
+												<input type="email" name="complainant_email" value="{{ old('complainant_email', $mediation->complainant_email) }}" class="p-3 border rounded-lg w-full" placeholder="Email" readonly>
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
+												@if ($mediation->complainant_id_proof)
+														<div class="mb-2">
+																<a href="{{ asset('storage/' . $mediation->complainant_id_proof) }}" target="_blank" class="text-blue-600 underline">View Current ID Proof</a>
+														</div>
+												@endif
+												<input type="file" name="complainant_id_proof" class="p-3 border rounded-lg w-full">
+										</div>
+												</div>
+												@endif
+
+												<!-- Entity Fields -->
+												@if($mediation->complainant_type === 'entity')
+												<div class="entity-fields grid grid-cols-1 md:grid-cols-2 gap-4">
+
+													<div>
+												<label class="block text-gray-700 font-semibold text-sm">Name of Entity</label>
+												<input type="text" name="complainant_name" value="{{ old('complainant_name', $mediation->complainant_name) }}" class="p-3 border rounded-lg w-full" placeholder="Enter entity name">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Authorised Representative</label>
+												<input type="text" name="complainant_father" value="{{ old('complainant_father', $mediation->complainant_father) }}" class="p-3 border rounded-lg w-full" placeholder="Enter authorized person">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Date of Incorporation</label>
+												<input type="date" name="complainant_dob" value="{{ old('complainant_dob', $mediation->complainant_dob) }}" class="p-3 border rounded-lg w-full">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Address</label>
+												<input type="text" name="complainant_address" value="{{ old('complainant_address', $mediation->complainant_address) }}" class="p-3 border rounded-lg w-full" placeholder="Enter address">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">State</label>
+												<input type="text" name="complainant_state_display" value="{{ optional($mediation->complainantState)->name }}" class="p-3 border rounded-lg w-full bg-gray-100" readonly>
+												<input type="hidden" name="complainant_state_id" value="{{ $mediation->complainant_state_id }}">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">City</label>
+												<input type="text" name="complainant_city_display" value="{{ optional($mediation->complainantCity)->name ?? 'Unknown' }}" class="p-3 border rounded-lg w-full bg-gray-100" readonly>
+												<input type="hidden" name="complainant_city_id" value="{{ $mediation->complainant_city_id }}">
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
+												<input type="text" name="complainant_pincode" value="{{ old('complainant_pincode', $mediation->complainant_pincode) }}" class="p-3 border rounded-lg w-full" placeholder="Enter pincode" readonly>
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Email</label>
+												<input type="email" name="complainant_email" value="{{ old('complainant_email', $mediation->complainant_email) }}" class="p-3 border rounded-lg w-full" placeholder="Email" readonly>
+										</div>
+
+										<div>
+												<label class="block text-gray-700 font-semibold text-sm">Upload Incorporation Certificate</label>
+												@if ($mediation->complainant_id_proof)
+														<div class="mb-2">
+																<a href="{{ asset('storage/' . $mediation->complainant_id_proof) }}" target="_blank" class="text-blue-600 underline">View Current Document</a>
+														</div>
+												@endif
+												<input type="file" name="complainant_id_proof" class="p-3 border rounded-lg w-full">
+										</div>
+
+												</div>
+												@endif
+										</fieldset>
 								</div>
 
+								<script>
+								function toggleComplainantAccordion() {
+										const content = document.getElementById('complainant-accordion-content');
+										const icon = document.getElementById('complainant-accordion-icon');
 
-								<!-- Fourth Row: Upload ID Proof -->
-								<div class="mt-6">
-									<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
-                                    @if ($mediation->complainant_id_proof)
-                                        <div class="mb-2">
-                                            <a href="{{ asset('storage/' . $mediation->complainant_id_proof) }}" target="_blank" class="text-blue-600 underline">View Current ID Proof</a>
-                                        </div>
-                                    @endif
-									<!-- <input type="file" name="complainant_id_proof" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all"> -->
-								</div>
+										content.classList.toggle('hidden');
+										icon.classList.toggle('rotate-180');
+								}
+								</script>
 
-							</fieldset>
-						</div>
 
-						<script>
-							function toggleComplainantAccordion() {
-								const content = document.getElementById("complainant-accordion-content");
-								const icon = document.getElementById("complainant-accordion-icon");
-								content.classList.toggle("hidden");
-								icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
-							}
-						</script>
 
               
             
             <!-- Complainant/Petitioner/Appellant Details Ends -->
 
-             <!-- Defendant (Multiple) Details -->
+             <!-- Defendant/Respondent Details -->
+<div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
+    <!-- Accordion Header -->
+    <div class="flex justify-between items-center p-4 bg-[#17A2B8] text-white rounded-t-lg cursor-pointer" onclick="toggleDefendantAccordion()">
+        <legend class="text-md font-bold tracking-wide">Defendant/Respondent Details</legend>
+        <span id="defendant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
+    </div>
 
-          
-					  <div class="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-300 rounded-lg shadow-lg mb-6">
-						<!-- Accordion Header -->
-						<div class="flex justify-between items-center p-4 bg-[#17A2B8] text-white rounded-t-lg cursor-pointer" onclick="toggleDefendantAccordion()">
-							<legend class="text-md font-bold tracking-wide">Defendent/Respondent Details</legend>
-							<span id="defendant-accordion-icon" class="transform transition-transform duration-300">&#9660;</span>
-						</div>
+    <!-- Accordion Content -->
+    <fieldset id="defendant-accordion-content" class="p-6 bg-white space-y-6 rounded-b-lg shadow-sm hidden transition-all duration-500">
+        
+        <!-- Toggle Type -->
+        <div>
+            <label class="block text-gray-700 font-semibold text-sm mb-2">Defendant Type <span class="text-red-500">*</span></label>
+            <div class="flex gap-6">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="defendant_type" value="individual" class="defendant-toggle-type" {{ old('defendant_type', $mediation->defendant_type) == 'individual' ? 'checked' : '' }}>
+                    <span class="ml-2 text-gray-700">Individual Defendant</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="radio" name="defendant_type" value="entity" class="defendant-toggle-type" {{ old('defendant_type', $mediation->defendant_type) == 'entity' ? 'checked' : '' }}>
+                    <span class="ml-2 text-gray-700">Entity Defendant</span>
+                </label>
+            </div>
+        </div>
 
-						<!-- Accordion Content -->
-						<fieldset id="defendant-accordion-content" class="p-6 bg-white space-y-8 rounded-b-lg shadow-sm hidden transition-all duration-500">
-							
-							<!-- First Row: 4 Columns -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Name</label>
-									<input type="text" name="defendant_name" value="{{ old('defendant_name', $mediation->defendant_name) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter respondent's name">
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Father's Name</label>
-									<input type="text" name="defendant_father" value="{{ old('defendant_father', $mediation->defendant_father) }}"  class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter father's name">
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Date of Birth</label>
-									<input type="date" name="defendant_dob"  value="{{ old('defendant_dob', $mediation->defendant_dob) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Gender</label>
-                                    <select name="defendant_gender" id="defendant_gender" class="w-full border p-2 rounded">
-                                        @foreach(['Male', 'Female', 'Other'] as $gender)
-                                            <option value="{{ $gender }}" @if(old('defendant_gender', $mediation->defendant_gender) == $gender) selected @endif>{{ $gender }}</option>
-                                        @endforeach
-                                    </select>
-							</div>
+        <!-- Individual Fields -->
+        <div id="defendant-individual-section" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_name" placeholder="Enter respondent's name" value="{{ old('defendant_name', $mediation->defendant_name) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Father's Name <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_father" placeholder="Enter father's name" value="{{ old('defendant_father', $mediation->defendant_father) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Date of Birth <span class="text-red-500">*</span></label>
+                    <input type="date" name="defendant_dob" value="{{ old('defendant_dob', $mediation->defendant_dob) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+            </div>
 
-							</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Gender <span class="text-red-500">*</span></label>
+                    <select name="defendant_gender" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                        <option value="">Select Gender</option>
+                        @foreach(['Male', 'Female', 'Other'] as $gender)
+                            <option value="{{ $gender }}" {{ old('defendant_gender', $mediation->defendant_gender) == $gender ? 'selected' : '' }}>{{ $gender }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Address <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_address" placeholder="Enter address" value="{{ old('defendant_address', $mediation->defendant_address) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">State <span class="text-red-500">*</span></label>
+                    <select name="defendant_state" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                        <option value="">Select State</option>
+                        @foreach($states as $state)
+                            <option value="{{ $state }}" {{ old('defendant_state', $mediation->defendant_state) == $state ? 'selected' : '' }}>{{ $state }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
 
-							<!-- Second Row: 5 Columns -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-5 gap-6">
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Address</label>
-									<input type="text" name="defendant_address" value ="{{ old('defendant_address', $mediation->defendant_address) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter address">
-								</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">City</label>
+                    <select name="defendant_city" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                        <option value="">Select City</option>
+                        @foreach($cities as $city)
+                            <option value="{{ $city }}" {{ old('defendant_city', $mediation->defendant_city) == $city ? 'selected' : '' }}>{{ $city }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">District <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_district" placeholder="Enter district" value="{{ old('defendant_district', $mediation->defendant_district) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Pincode <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_pincode" placeholder="Enter pincode" value="{{ old('defendant_pincode', $mediation->defendant_pincode) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+            </div>
 
-                                <div>
-										<label class="block text-gray-700 font-semibold text-sm">State</label>
-										<input type="text" 
-                                            name="defendant_state_display" 
-                                            id="defendant_state_display"
-                                            value="{{ optional($mediation->defendantState)->name ?? '' }}"
-                                            class="w-full border p-2 rounded bg-gray-100 text-gray-700"
-                                            readonly>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Mobile</label>
+                    <input type="text" name="defendant_mobile" placeholder="Enter 10-digit mobile number" value="{{ old('defendant_mobile', $mediation->defendant_mobile) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Email <span class="text-red-500">*</span></label>
+                    <input type="email" name="defendant_email" placeholder="Enter email address" value="{{ old('defendant_email', $mediation->defendant_email) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
+                    @if ($mediation->defandant_id_proof)
+                        <div class="mb-2">
+                            <a href="{{ asset('storage/' . $mediation->defandant_id_proof) }}" target="_blank" class="text-blue-600 underline">View Uploaded ID</a>
+                        </div>
+                    @endif
+                    <input type="file" name="defandant_id_proof" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+            </div>
+        </div>
 
-                                        <input type="hidden" name="defendant_state_id" value="{{ $mediation->defendant_state_id }}">
+        <!-- Entity Fields -->
+        <div id="defendant-entity-section" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Name of Entity<span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_name" placeholder="Enter respondent's name" value="{{ old('defendant_entity_name', $mediation->defendant_entity_name) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Authorised Representative <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_father" placeholder="Enter authorized person's name" value="{{ old('defendant_authorized_person', $mediation->defendant_authorized_person) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Date of Incorporation <span class="text-red-500">*</span></label>
+                    <input type="date" name="defendant_dob" value="{{ old('defendant_dob', $mediation->defendant_dob) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+            </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Address <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_address" placeholder="Enter address" value="{{ old('defendant_address', $mediation->defendant_address) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">State <span class="text-red-500">*</span></label>
+                    <select name="defendant_state" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                        <option value="">Select State</option>
+                        @foreach($states as $state)
+                            <option value="{{ $state }}" {{ old('defendant_state', $mediation->defendant_state) == $state ? 'selected' : '' }}>{{ $state }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">City <span class="text-red-500">*</span></label>
+                    <select name="defendant_city" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                        <option value="">Select City</option>
+                        @foreach($cities as $city)
+                            <option value="{{ $city }}" {{ old('defendant_city', $mediation->defendant_city) == $city ? 'selected' : '' }}>{{ $city }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
 
-								</div>
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">City</label>
-									
-                                    <input type="text" 
-                                        name="defendant_city_display" 
-                                        id="defendant_city_display"
-                                        value="{{ optional($mediation->defendantCity)->name ?? '' }}"
-                                        class="w-full border p-2 rounded bg-gray-100 text-gray-700"
-                                        readonly>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Pincode <span class="text-red-500">*</span></label>
+                    <input type="text" name="defendant_pincode" placeholder="Enter pincode" value="{{ old('defendant_pincode', $mediation->defendant_pincode) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Email <span class="text-red-500">*</span></label>
+                    <input type="email" name="defendant_email" placeholder="Enter email address" value="{{ old('defendant_email', $mediation->defendant_email) }}" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Incorporation Certificate</label>
+                    @if ($mediation->defandant_id_proof)
+                        <div class="mb-2">
+                            <a href="{{ asset('storage/' . $mediation->defandant_id_proof) }}" target="_blank" class="text-blue-600 underline">View Uploaded Certificate</a>
+                        </div>
+                    @endif
+                    <input type="file" name="defandant_id_proof" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
 
-                                    <input type="hidden" name="defendant_city_id" value="{{ $mediation->defendant_city_id }}">
+<script>
+    function toggleDefendantAccordion() {
+        const content = document.getElementById('defendant-accordion-content');
+        const icon = document.getElementById('defendant-accordion-icon');
+        content.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+    }
+</script>
 
-							</div>
-									<div>
-										<label class="block text-gray-700 font-semibold text-sm">District</label>
-										<input type="text" name="defendant_district" value="{{ old('defendant_district', $mediation->defendant_district) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
-									</div>
-									
-								<div>
-									<label class="block text-gray-700 font-semibold text-sm">Pincode</label>
-									<input type="text" name="defendant_pincode"  value="{{ old('defendant_pincode', $mediation->defendant_pincode) }}" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm" placeholder="Enter pincode" readonly>
-								</div>
-							</div>
-
-							<!-- Third Row: Mobile & Email -->
-							<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-									<!-- Mobile Section -->
-									<div>
-											<label for="defendant_mobile" class="block text-gray-700 font-semibold text-sm">Mobile</label>
-											<input 
-													id="defendant_mobile"
-													type="tel" 
-													name="defendant_mobile" 
-													value="{{ old('defendant_mobile', $mediation->defendant_mobile) }}"  
-													autocomplete="tel"
-													inputmode="numeric"
-													pattern="^[0-9]{10}$"
-													required
-													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('defendant_mobile') border-red-600 @enderror" 
-													placeholder="Enter 10-digit mobile number"
-											>
-									</div>
-
-									<!-- Email Section -->
-									<div>
-											<label for="defendant_email" class="block text-gray-700 font-semibold text-sm">Email</label>
-											<input 
-													id="defendant_email"
-													type="email" 
-													name="defendant_email" 
-													value="{{ old('defendant_email', $mediation->defendant_email) }}" 
-													autocomplete="email"
-													required
-													class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105 @error('defendant_email') border-red-600 @enderror" 
-													placeholder="Enter email address"
-											>
-									</div>
-							</div>
-
-							<!-- Fourth Row: Upload ID Proof -->
-								<div class="mt-6">
-									<label class="block text-gray-700 font-semibold text-sm">Upload ID Proof</label>
-                                        @if ($mediation->defandant_id_proof)
-                                            <div class="mb-2">
-                                                <a href="{{ asset('storage/' . $mediation->defandant_id_proof) }}" target="_blank" class="text-blue-600 underline">View Current ID Proof</a>
-                                            </div>
-                                        @endif
-                                        <!-- <input type="file" name="defandant_id_proof" id="defandant_id_proof" class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none file:bg-blue-700 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer hover:file:bg-blue-600 transition-all" /> -->
-								</div>
-						</fieldset>
-					</div>
-
-					<script>
-						function toggleDefendantAccordion() {
-							const content = document.getElementById("defendant-accordion-content");
-							const icon = document.getElementById("defendant-accordion-icon");
-							content.classList.toggle("hidden");
-							icon.style.transform = content.classList.contains("hidden") ? "rotate(180deg)" : "rotate(0deg)";
-						}
-					</script>
 
              <!-- Defendant Ends -->
 
@@ -458,7 +534,7 @@
                                                     value="{{ old('complainant_advocate_name', optional($mediation->complainantAdvocate)->name ?? '') }}" 
                                                     class="p-3 border border-gray-300 rounded-lg w-full" 
                                                     placeholder="Search Advocate" 
-                                                    autocomplete="off">
+                                                    autocomplete="off" readonly>
 
                                             <datalist id="advocate_suggestions">
                                                 @foreach($advocates as $advocate)
@@ -479,11 +555,11 @@
                                             advocateInput.addEventListener('input', function() {
                                                 const val = this.value;
                                                 const opts = dataList.options;
-                                                hiddenAdvocateId.value = ''; // reset hidden input if no match
+                                                hiddenAdvocateId.value = '';
 
                                                 for(let i = 0; i < opts.length; i++) {
                                                 if(opts[i].value === val) {
-                                                    hiddenAdvocateId.value = opts[i].dataset.id; // set hidden input to selected advocate id
+                                                    hiddenAdvocateId.value = opts[i].dataset.id; 
                                                     break;
                                                 }
                                                 }
@@ -506,7 +582,7 @@
                                                 value="{{ old('defendant_advocate_name', optional($mediation->defendantAdvocate)->name ?? '') }}" 
                                                 class="p-3 border border-gray-300 rounded-lg w-full" 
                                                 placeholder="Search Advocate" 
-                                                autocomplete="off">
+                                                autocomplete="off" readonly>
 
                                                <input type="hidden" 
                                                 name="defendant_advocate_id" 
@@ -536,7 +612,7 @@
 																	value="{{ old('mediator_name', optional($mediation->mediator)->name ?? '') }}" 
 																	class="p-3 border border-gray-300 rounded-lg w-full" 
 																	placeholder="Search Mediator"
-																	autocomplete="off">
+																	autocomplete="off" readonly>
 
 														<datalist id="mediator_suggestions">
 																@foreach($mediators as $mediator)
