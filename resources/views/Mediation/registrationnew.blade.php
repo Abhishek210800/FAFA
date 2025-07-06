@@ -426,12 +426,18 @@
 													</div>
 												</div>
 
-												<div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+												<div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
 													<div>
 														<label class="block text-gray-700 font-semibold text-sm">Date of Incorporation<span class="text-red-500">*</span></label>
 														<input type="date" name="complainant_dob" value="{{ old('complainant_dob') }}"
 																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm">
 													</div>
+													<div>
+													<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
+													<input type="text" name="complainant_address" value="{{ old('complainant_address') }}"
+																class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
+																placeholder="Enter address">
+												</div>
 													<div>
 														<label class="block text-gray-700 font-semibold text-sm">State<span class="text-red-500">*</span></label>
 														<select name="complainant_state_id"
@@ -465,12 +471,7 @@
 													</div>
 												</div>
 
-												<div class="mt-6">
-													<label class="block text-gray-700 font-semibold text-sm">Address<span class="text-red-500">*</span></label>
-													<input type="text" name="complainant_address" value="{{ old('complainant_address') }}"
-																class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
-																placeholder="Enter address">
-												</div>
+												
 
 												<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 													<div>
@@ -538,9 +539,9 @@
 												<label for="defendant_type" class="block text-gray-700 font-semibold text-sm"> Defendant Type<span class="text-red-500">*</span></label>
 												<select id="defendant_type" name="defendant_type" onchange="toggleDefendantType()" 
 																class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm">
-														<option value="">Select Defendant Type</option>
-														<option value="individual">Individual Defendant</option>
-														<option value="entity">Entity Defendant</option>
+														<option value="">Select  Type</option>
+														<option value="individual">Individual </option>
+														<option value="entity">Entity </option>
 												</select>
 										</div>
 
