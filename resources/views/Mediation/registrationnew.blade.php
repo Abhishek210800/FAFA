@@ -386,13 +386,18 @@
 												</div>
 
 												<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-													<div>
+													<div x-show="complainantType === 'individual'">
 														<label class="block text-gray-700 font-semibold text-sm">Mobile</label>
-														<input type="tel" name="complainant_mobile" value="{{ old('complainant_mobile') }}"
-																	pattern="[0-9]{10}"
+														<input type="tel" name="complainant_mobile"
+																	value="{{ old('complainant_mobile') }}"
+																	pattern="[0-9]{10}"             
+																	maxlength="10"                    
+																	x-bind:required="complainantType === 'individual'" 
 																	class="p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-500 shadow-sm"
 																	placeholder="Mobile number">
 													</div>
+
+
 													<div>
 														<label class="block text-gray-700 font-semibold text-sm">Email<span class="text-red-500">*</span></label>
 														<input type="email" name="complainant_email" value="{{ old('complainant_email') }}"
@@ -740,6 +745,8 @@
 										}
 								}
 						</script>
+
+
 
 						<!--- Defandant ends here-->
 
@@ -1338,6 +1345,64 @@
 										});
 								});
 								</script>
+								<script>
+									function disableGroup(el) {
+										el.querySelectorAll('input, select').forEach(i => i.disabled = true)
+									}
+									function enableGroup(el) {
+										el.querySelectorAll('input, select').forEach(i => i.disabled = false)
+									}
+
+									function toggleComplainantType() {
+										const type = document.getElementById('complainant_type').value
+										const ind  = document.getElementById('individual-fields')
+										const ent  = document.getElementById('entity-fields')
+
+										if (type === 'individual') {
+											enableGroup(ind);  disableGroup(ent)
+											ind .classList.remove('hidden')
+											ent .classList.add   ('hidden')
+										}
+										else if (type === 'entity') {
+											enableGroup(ent);  disableGroup(ind)
+											ent .classList.remove('hidden')
+											ind .classList.add   ('hidden')
+										}
+										else {
+											disableGroup(ind); disableGroup(ent)
+											ind .classList.add   ('hidden')
+											ent .classList.add   ('hidden')
+										}
+									}
+
+									function toggleDefendantType() {
+										const type = document.getElementById('defendant_type').value
+										const ind  = document.getElementById('individual-defendant-form')
+										const ent  = document.getElementById('entity-defendant-form')
+
+										if (type === 'individual') {
+											enableGroup(ind);  disableGroup(ent)
+											ind .classList.remove('hidden')
+											ent .classList.add   ('hidden')
+										}
+										else if (type === 'entity') {
+											enableGroup(ent);  disableGroup(ind)
+											ent .classList.remove('hidden')
+											ind .classList.add   ('hidden')
+										}
+										else {
+											disableGroup(ind); disableGroup(ent)
+											ind .classList.add   ('hidden')
+											ent .classList.add   ('hidden')
+										}
+									}
+
+									document.addEventListener('DOMContentLoaded', () => {
+										toggleComplainantType()
+										toggleDefendantType()
+									})
+								</script>
+
 
 </body>
 </html>

@@ -8,7 +8,7 @@
         const container = $('#datatableContainer');
 
         const table = tableElement.DataTable({
-            order: [[0, 'asc']],
+            order: [[0, 'desc']],
             pageLength: 20,
             dom: '<"flex flex-col md:flex-row justify-between items-center mb-4 gap-2"lf>t<"flex justify-between items-center mt-4"ip>',
             initComplete: function () {

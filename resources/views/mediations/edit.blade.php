@@ -210,10 +210,10 @@
 												<input type="hidden" name="complainant_city_id" value="{{ $mediation->complainant_city_id }}">
 										</div>
 
-										<div>
-												<label class="block text-gray-700 font-semibold text-sm">District</label>
-												<input type="text" name="complainant_district" value="{{ old('complainant_district', $mediation->complainant_district) }}" class="p-3 border rounded-lg w-full" placeholder="Enter district">
-										</div>
+										<!-- <div>
+										<label class="block text-gray-700 font-semibold text-sm">District</label>
+										<input type="text" name="complainant_district" value="{{ old('complainant_district', $mediation->complainant_district) }}"class="p-3 border border-gray-300 bg-white rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm transition-all duration-200 ease-in-out transform hover:scale-105" placeholder="Enter district">
+									</div> -->
 
 										<div>
 												<label class="block text-gray-700 font-semibold text-sm">Pincode</label>

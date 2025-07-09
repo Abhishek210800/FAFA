@@ -30,4 +30,24 @@ class Respondent extends Model
     {
         return $this->belongsTo(Mediation::class);
     }
+
+    
+    public function complainantState()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function complainantCity()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
 }
