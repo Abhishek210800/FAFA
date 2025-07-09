@@ -246,7 +246,7 @@
 											const courtId = courtSelect ? courtSelect.value : '';
 
 											if (query.length >= 1) {
-												fetch(`/judge-suggestions?query=${encodeURIComponent(query)}&court_id=${encodeURIComponent(courtId)}`)
+												fetch(`judge-suggestions?query=${encodeURIComponent(query)}&court_id=${encodeURIComponent(courtId)}`)
 													.then(response => response.json())
 													.then(data => {
 														const datalist = document.getElementById('judge_suggestions');
@@ -1281,7 +1281,7 @@
 												$(inputSelector).autocomplete({
 														source: function (request, response) {
 																$.ajax({
-																		url: '/autocomplete/advocates', 
+																		url: 'autocomplete/advocates', 
 																		data: { term: request.term },
 																		success: function (data) {
 																				// Filter out the advocate selected in the other field to prevent duplication
@@ -1331,7 +1331,7 @@
 										$("#mediator_name").autocomplete({
 												source: function (request, response) {
 														$.ajax({
-																url: '/autocomplete/mediators',
+																url: 'autocomplete/mediators',
 																data: { term: request.term },
 																success: function (data) {
 																		response(data);
