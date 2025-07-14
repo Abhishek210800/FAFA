@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class CourtCase extends Model
+class CourtCase extends BaseModel
 {
-    // Define the table name if it differs from the pluralized version
-    protected $table = 'court_cases'; // Example: adjust the table name if needed
+    
+    protected $table = 'court_cases'; 
 
-    // Define any relationships, fillable fields, etc.
+    
 }

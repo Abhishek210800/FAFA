@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Advocate extends Model
+class Advocate extends BaseModel
 {
     protected $table = 'advocate_mast'; 
 
-    protected $fillable = ['name', 'bar_number', 'emailId','mobile'];
+    protected $fillable = ['name', 'bar_number', 'emailId', 'mobile'];
 
     public function complainantMediations()
     {

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class JudgeMast extends Model
+class JudgeMast extends BaseModel
 {
     protected $table = 'judge_mast';
     protected $primaryKey = 'AGJudgecode';

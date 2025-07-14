@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Hearing extends Model
+class Hearing extends BaseModel
 {
     protected $fillable = ['court_case_id', 'hearing_date'];
 }

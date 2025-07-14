@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Mediator extends Model
+class Mediator extends BaseModel
 {
     protected $table = 'mediator_mast'; 
 

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Statute extends Model
+class Statute extends BaseModel
 {
     protected $table = 'statute_mast';
 

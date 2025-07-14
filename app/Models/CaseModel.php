@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 use App\Models\CaseNumber;
 
-class CaseModel extends Model
+class CaseModel extends BaseModel
 {
     protected $table = 'cases';
 

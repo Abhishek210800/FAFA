@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class SupportMessage extends Model
+class SupportMessage extends BaseModel
 {
     protected $fillable = ['name', 'email', 'issue_type', 'message', 'is_read'];
 

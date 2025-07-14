@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Mediation extends Model
+class Mediation extends BaseModel
 {
     protected $fillable = [
         'court_id', 'judge_id', 'case_number', 'reference_date', 'mediation_date',

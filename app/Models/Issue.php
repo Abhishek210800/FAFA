@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Issue extends Model
+class Issue extends BaseModel
 {
     protected $table = 'issue_mast';
     protected $primaryKey = 'Issue_Code';

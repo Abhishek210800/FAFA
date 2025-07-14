@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\BaseModel;
 
-class Complainant extends Model
+
+class Complainant extends BaseModel
 {
     use HasFactory;
 
