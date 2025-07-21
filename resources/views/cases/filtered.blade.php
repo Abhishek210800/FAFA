@@ -11,7 +11,7 @@
     <header class="bg-white shadow-md w-full">
         <div class="container mx-auto flex justify-between items-center px-6 py-3">
             <div>
-                <img src="{{ asset('images/logonew.png') }}" alt="Logo" class="h-12">
+                <img src="{{ asset('images/logonew2.png') }}" alt="Logo" class="h-12">
             </div>
 
             <nav class="hidden md:flex space-x-4 items-center">

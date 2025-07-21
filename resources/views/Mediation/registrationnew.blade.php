@@ -32,7 +32,7 @@
     <div class="container mx-auto flex justify-between items-center px-6 py-3">
         <!-- Logo -->
         <div class="flex items-center space-x-2">
-					<img src="{{ asset('images/logonew.png') }}" alt="Logo" class="h-12">
+					<img src="{{ asset('images/logonew2.png') }}" alt="Logo" class="h-12">
         </div>
 
         <!-- Mobile Menu Button -->

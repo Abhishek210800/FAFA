@@ -13,7 +13,7 @@
   <!-- HEADER -->
   <header class="bg-white shadow-md">
     <div class="container mx-auto flex justify-between items-center px-6 py-3">
-      <img src="{{ asset('images/logonew.png') }}" alt="Logo" class="h-12">
+      <img src="{{ asset('images/logonew2.png') }}" alt="Logo" class="h-12">
       <nav class="hidden md:flex space-x-4 items-center">
             <a href="{{ route('dashboard') }}"
                 class="p-2 rounded-lg {{ request()->routeIs('dashboard') ? 'bg-blue-700 text-white' : 'hover:bg-blue-700 hover:text-white' }}">
