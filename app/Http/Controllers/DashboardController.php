@@ -93,7 +93,7 @@ class DashboardController extends Controller
 
     public function show($id)
     {
-        $case = Mediation::with(['complainant', 'respondent'])->findOrFail($id);
+        $case = Mediation::with(['complainant', 'respondent','defendant'])->findOrFail($id);
         return view('cases.show', compact('case'));
     }
 

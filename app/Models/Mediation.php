@@ -93,6 +93,10 @@ class Mediation extends BaseModel
     {
         return $this->belongsTo(CaseModel::class, 'case_number', 'case_number');
     }
+    public function defendant()
+    {
+        return $this->hasOne(Respondent::class, 'mediation_id');
+    }
 
 
 }

@@ -80,27 +80,57 @@
                 <div class="bg-green-600 text-white px-4 py-2 rounded-t">
                     <h2 class="font-semibold">Complainant/Petitioner/Appellant Details</h2>
                 </div>
-                <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div><strong>Name:</strong> {{ $case->complainant_name }}</div>
-                    <div><strong>Father's Name:</strong> {{ $case->complainant_father }}</div>
-                    <div><strong>DOB:</strong> {{ $case->complainant_dob }}</div>
-                    <div><strong>Gender:</strong> {{ $case->complainant_gender }}</div>
-                    <div><strong>Address:</strong> {{ $case->complainant_address }}</div>
-                    <div><strong>State:</strong> {{ $case->complainantState->state_name ?? $case->complainant_state_id }}</div>
-                    <div><strong>City:</strong> {{ $case->complainantCity->city_name ?? $case->complainant_city_id }}</div>
-                    <div><strong>District:</strong> {{ $case->complainant_district }}</div>
-                    <div><strong>Pincode:</strong> {{ $case->complainant_pincode }}</div>
-                    <div><strong>Mobile:</strong> {{ $case->complainant_mobile }}</div>
-                    <div><strong>Email:</strong> {{ $case->complainant_email }}</div>
-                    <div>
-                        <strong>ID Proof:</strong>
-                        @if($case->complainant_id_proof)
-                            <a href="{{ asset('storage/'.$case->complainant_id_proof) }}" class="text-blue-600 underline" target =_blank>View Current ID Proof</a>
+               @if ($case->complainant && $case->complainant->complainant_type === 'individual')
+
+                  <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div><strong>Name:</strong> {{ $case->complainant->name }}</div>
+                    <div><strong>Father's Name:</strong> {{ $case->complainant->father }}</div>
+                    <div><strong>Date of Birth:</strong> {{ \Carbon\Carbon::parse($case->complainant->dob)->format('d-m-Y') }}</div>
+                    <div><strong>Gender:</strong> {{ $case->complainant->gender }}</div>
+                    <div><strong>Address:</strong> {{ $case->complainant->address }}</div>
+                    <div><strong>State:</strong> {{  ucfirst(strtolower($case->complainant->state->name ?? 'N/A')) }}</div>
+                    <div><strong>City:</strong> {{ $case->complainant->city->name ?? 'N/A' }}</div>
+                    <div><strong>District:</strong> {{ $case->complainant->district  ?? 'N/A' }}</div>
+                    <div><strong>Pincode:</strong> {{ $case->complainant->pincode ?? 'N/A' }}</div>
+                    <div><strong>Mobile:</strong> {{ $case->complainant->mobile ?? 'N/A' }}</div>
+                    <div><strong>Email:</strong> {{ $case->complainant->email ?? 'N/A' }}</div>
+
+                    @if ($case->complainant->id_proof)
+                        <div>
+                            <strong>ID Proof:</strong><br />
+                            <a href="{{ asset('storage/' . $case->complainant->id_proof) }}" target="_blank"
+                                class="text-blue-600 underline">View Uploaded File</a>
+                        </div>
+                      @else
+                          <div><strong>ID Proof:</strong> Not uploaded</div>
+                      @endif
+                  </div>
+
+                @elseif ($case->complainant && $case->complainant->complainant_type === 'entity')
+
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div><strong>Name of Entity:</strong> {{ $case->complainant->name }}</div>
+                        <div><strong>Authorised Representative:</strong> {{ $case->complainant->father }}</div>
+                        <div><strong>Date of Incorporation:</strong> {{ \Carbon\Carbon::parse($case->complainant->dob)->format('d-m-Y') }}</div>
+                        <div><strong>Address:</strong> {{  $case->complainant->address }}</div>
+                        <div><strong>State:</strong> {{  ucfirst(strtolower($case->complainant->state->name ?? 'N/A')) }}</div>
+                        <div><strong>City:</strong> {{ $case->complainant->city->name ?? 'N/A' }}</div>
+                        <div><strong>Pincode:</strong> {{ $case->complainant->pincode ?? 'N/A' }}</div>
+                        <div><strong>Email:</strong> {{ $case->complainant->email ?? 'N/A' }}</div>
+
+                        @if ($case->complainant->id_proof)
+                            <div>
+                                <strong>Incorporation Certificate:</strong><br />
+                                <a href="{{ asset('storage/' . $case->complainant->id_proof) }}" target="_blank"
+                                    class="text-blue-600 underline">View Uploaded File</a>
+                            </div>
                         @else
-                            Not uploaded
+                            <div><strong>Incorporation Certificate:</strong> Not uploaded</div>
                         @endif
                     </div>
-                </div>
+                @else
+                    <div class="bg-yellow-100 text-yellow-800 p-4 rounded mb-4 shadow">Complainant type not specified.</div>
+                @endif
             </div>
 
             {{-- Defendant Details --}}
@@ -108,27 +138,56 @@
                 <div class="bg-red-600 text-white px-4 py-2 rounded-t">
                     <h2 class="font-semibold">Defendant/Respondent Details</h2>
                 </div>
-                <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div><strong>Name:</strong> {{ $case->defendant_name }}</div>
-                    <div><strong>Father's Name:</strong> {{ $case->defendant_father }}</div>
-                    <div><strong>DOB:</strong> {{ $case->defendant_dob }}</div>
-                    <div><strong>Gender:</strong> {{ $case->defendant_gender }}</div>
-                    <div><strong>Address:</strong> {{ $case->defendant_address }}</div>
-                    <div><strong>State:</strong> {{ $case->defendantState->state_name ?? $case->defendant_state_id }}</div>
-                    <div><strong>City:</strong> {{ $case->defendantCity->city_name ?? $case->defendant_city_id }}</div>
-                    <div><strong>District:</strong> {{ $case->defendant_district }}</div>
-                    <div><strong>Pincode:</strong> {{ $case->defendant_pincode }}</div>
-                    <div><strong>Mobile:</strong> {{ $case->defendant_mobile }}</div>
-                    <div><strong>Email:</strong> {{ $case->defendant_email }}</div>
+              @if ($case->defendant && $case->defendant->defendant_type === 'individual')
+
+            <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div><strong>Name:</strong> {{ $case->defendant->name }}</div>
+                <div><strong>Father's Name:</strong> {{ $case->defendant->father }}</div>
+                <div><strong>Date of Birth:</strong> {{ \Carbon\Carbon::parse($case->defendant->dob)->format('d-m-Y') }}</div>
+                <div><strong>Gender:</strong> {{ $case->defendant->gender }}</div>
+                <div><strong>Address:</strong> {{ $case->defendant->address }}</div>
+                <div><strong>State:</strong> {{  ucfirst(strtolower($case->complainant->state->name ?? 'N/A')) }}</div>
+                <div><strong>City:</strong> {{ $case->defendant->city->name ?? 'N/A' }}</div>
+                <div><strong>District:</strong> {{ $case->defendant->district  ?? 'N/A' }}</div>
+                <div><strong>Pincode:</strong> {{ $case->defendant->pincode }}</div>
+                <div><strong>Mobile:</strong> {{ $case->defendant->mobile ?? 'N/A' }}</div>
+                <div><strong>Email:</strong> {{ $case->defendant->email }}</div>
+
+                @if ($case->defandant->id_proof)
                     <div>
-                        <strong>ID Proof:</strong>
-                        @if($case->defandant_id_proof)
-                            <a href="{{ asset('storage/'.$case->defandant_id_proof) }}" class="text-blue-600 underline" target =_blank>View Current ID Proof</a>
-                        @else
-                            Not uploaded
-                        @endif
+                        <strong>ID Proof:</strong><br />
+                        <a href="{{ asset('storage/' . $case->defandant->id_proof) }}" target="_blank"
+                            class="text-blue-600 underline">View Uploaded File</a>
                     </div>
-                </div>
+                @else
+                    <div><strong>ID Proof:</strong> Not uploaded</div>
+                @endif
+            </div>
+
+        @elseif ($case->defendant && $case->defendant->defendant_type === 'entity')
+            <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div><strong>Name of Entity:</strong> {{ $case->defendant->name }}</div>
+                <div><strong>Authorised Representative:</strong> {{ $case->defendant->father }}</div>
+                <div><strong>Date of Incorporation:</strong> {{ \Carbon\Carbon::parse($case->defendant->dob)->format('d-m-Y') }}</div>
+                <div><strong>Address:</strong> {{ $case->defendant->address }}</div>
+                <div><strong>State:</strong> {{  ucfirst(strtolower($case->complainant->state->name ?? 'N/A')) }}</div>
+                <div><strong>City:</strong> {{ $case->defendant->city->name ?? 'N/A' }}</div>
+                <div><strong>Pincode:</strong> {{ $case->defendant->pincode }}</div>
+                <div><strong>Email:</strong> {{ $case->defendant->email }}</div>
+
+                @if ($case->defandant->id_proof)
+                    <div>
+                        <strong>Incorporation Certificate:</strong><br />
+                        <a href="{{ asset('storage/' . $case->defandant->id_proof) }}" target="_blank"
+                            class="text-blue-600 underline">View Uploaded File</a>
+                    </div>
+                @else
+                    <div><strong>Incorporation Certificate:</strong> Not uploaded</div>
+                @endif
+            </div>
+        @else
+            <div class="bg-yellow-100 text-yellow-800 p-4 rounded mb-4 shadow">Respondent type not specified.</div>
+        @endif
             </div>
 
             {{-- Advocate & Mediator --}}
@@ -154,39 +213,42 @@
                     <div><strong>Statute:</strong> {{ $case->statute->Act_Name ?? 'N/A' }}</div>
                     <div><strong>Status:</strong> {{ $case->status }}</div>
                 </div>
-            </div>
-
+            </div> 
             <div class="text-center">
-                <a href="{{ route('dashboard') }}" class="bg-gray-700 text-white px-4 py-2 rounded">Go Back</a>
+                <a href="{{ url()->previous() }}"
+                  class="bg-gray-700 text-white px-4 py-2 rounded">
+                  Go Back
+                </a>
+            </div>           
+    </div>
+    
+
+        <!-- Modal -->
+        <div id="summaryModal"
+            class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+          <div class="bg-white rounded-lg p-6 w-full max-w-3xl shadow-xl relative">
+            <h2 id="summaryTitle" class="text-xl font-bold mb-4">Summary</h2>
+
+            <div id="loader" class="flex justify-center items-center py-6 hidden">
+              <svg class="animate-spin h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg"
+                  fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10"
+                        stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+              <span class="ml-2 text-indigo-600 font-medium text-sm">Generating summary...</span>
             </div>
-    </div>
 
- <!-- Modal -->
-<div id="summaryModal"
-     class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg p-6 w-full max-w-3xl shadow-xl relative">
-    <h2 id="summaryTitle" class="text-xl font-bold mb-4">Summary</h2>
+            <div id="summaryContent"
+                class="max-h-96 overflow-y-auto text-sm text-gray-700 whitespace-pre-line"></div>
 
-    <div id="loader" class="flex justify-center items-center py-6 hidden">
-      <svg class="animate-spin h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg"
-           fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10"
-                stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor"
-              d="M4 12a8 8 0 018-8v8H4z"></path>
-      </svg>
-      <span class="ml-2 text-indigo-600 font-medium text-sm">Generating summary...</span>
-    </div>
-
-    <div id="summaryContent"
-         class="max-h-96 overflow-y-auto text-sm text-gray-700 whitespace-pre-line"></div>
-
-    <button onclick="closeSummaryModal()"
-            class="absolute top-2 right-2 text-gray-700 hover:text-red-600 font-bold text-xl">
-      &times;
-    </button>
-  </div>
-</div>
+            <button onclick="closeSummaryModal()"
+                    class="absolute top-2 right-2 text-gray-700 hover:text-red-600 font-bold text-xl">
+              &times;
+            </button>
+          </div>
+        </div>
 
 <script>
   function summarizeOrderFile(caseId) {
