@@ -153,10 +153,10 @@
                 <div><strong>Mobile:</strong> {{ $case->defendant->mobile ?? 'N/A' }}</div>
                 <div><strong>Email:</strong> {{ $case->defendant->email }}</div>
 
-                @if ($case->defandant->id_proof)
+                @if ($case->defendant->id_proof)
                     <div>
                         <strong>ID Proof:</strong><br />
-                        <a href="{{ asset('storage/' . $case->defandant->id_proof) }}" target="_blank"
+                        <a href="{{ asset('storage/' . $case->defendant->id_proof) }}" target="_blank"
                             class="text-blue-600 underline">View Uploaded File</a>
                     </div>
                 @else
@@ -175,10 +175,10 @@
                 <div><strong>Pincode:</strong> {{ $case->defendant->pincode }}</div>
                 <div><strong>Email:</strong> {{ $case->defendant->email }}</div>
 
-                @if ($case->defandant->id_proof)
+                @if ($case->defendant->id_proof)
                     <div>
                         <strong>Incorporation Certificate:</strong><br />
-                        <a href="{{ asset('storage/' . $case->defandant->id_proof) }}" target="_blank"
+                        <a href="{{ asset('storage/' . $case->defendant->id_proof) }}" target="_blank"
                             class="text-blue-600 underline">View Uploaded File</a>
                     </div>
                 @else
