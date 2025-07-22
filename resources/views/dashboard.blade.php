@@ -50,7 +50,7 @@
                         }                    
                 </style>
                 <aside class="sidebar hidden md:block md:w-64 bg-gray-200 text-black flex-col p-4 fixed h-full overflow-y-auto">
-                <img src="{{ asset('images/logoupdated.png') }}" alt="Company Logo" class="mb-6 w-full" />
+                <img src="{{ asset('images/logoupdated2.png') }}" alt="Company Logo" class="mb-6 w-full" />
                 <nav class="flex flex-col space-y-4">
                     <a href="{{ route('dashboard') }}" class="p-2 bg-blue-700 text-white rounded-lg">📂 Manage Cases</a>
                     <a href="{{ route('appellants.index') }}" class="p-2 hover:bg-blue-700 hover:text-white rounded-lg">👨‍⚖ Appellant</a>
